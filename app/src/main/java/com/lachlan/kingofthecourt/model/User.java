@@ -54,4 +54,12 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
 }

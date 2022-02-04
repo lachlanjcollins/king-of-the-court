@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.lachlan.kingofthecourt.Database;
 import com.lachlan.kingofthecourt.MainActivity;
 import com.lachlan.kingofthecourt.Validation;
 import com.lachlan.kingofthecourt.databinding.ActivityNewUserBinding;
@@ -15,14 +16,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.lachlan.kingofthecourt.model.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class NewUserActivity extends AppCompatActivity {
     private ActivityNewUserBinding binding;
-    private FirebaseUser user;
-    private FirebaseFirestore db;
+    private FirebaseUser firebaseUser;
+    private User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,8 +32,10 @@ public class NewUserActivity extends AppCompatActivity {
         binding = ActivityNewUserBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        db = FirebaseFirestore.getInstance();
+        
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        Database db = new Database();
+        Validation valid = new Validation();
 
         binding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,26 +44,17 @@ public class NewUserActivity extends AppCompatActivity {
                 String lastName = binding.editTextLName.getText().toString();
                 String position = binding.editTextPosition.getText().toString();
 
-                Validation valid = new Validation();
-
                 if (!(valid.isBlank(firstName) || valid.isBlank(lastName) || valid.isBlank(position))) {
-                    Map<String, Object> userData = new HashMap<>();
-                    userData.put("fName", firstName);
-                    userData.put("lName", lastName);
-                    userData.put("position", position);
-                    db.collection("users").document(user.getUid()).set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(NewUserActivity.this, "Data Saved", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(NewUserActivity.this, MainActivity.class));
-                        }
-                    });
+                    user = new User(firebaseUser.getUid(), firstName, lastName, firebaseUser.getEmail(), position);
+                    db.registerUser(NewUserActivity.this, user);
                 } else
                     Toast.makeText(NewUserActivity.this, "Please Fill All Fields", Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
-
-
+    public void onRegistrationSuccess() {
+        Toast.makeText(this, "Registration Success", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(NewUserActivity.this, MainActivity.class));
     }
 }

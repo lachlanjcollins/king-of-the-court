@@ -14,6 +14,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.lachlan.kingofthecourt.login.NewUserActivity;
 import com.lachlan.kingofthecourt.model.User;
+import com.lachlan.kingofthecourt.ui.profile.EditProfileFragment;
+import com.lachlan.kingofthecourt.ui.profile.EditProfileViewModel;
 
 public class Database {
     private FirebaseFirestore firebaseFirestore;
@@ -58,6 +60,26 @@ public class Database {
                 activity.setCurrentUser(user);
             }
         });
+    }
 
+    public void updateUser(EditProfileFragment editProfileFragment, User user) {
+        Log.e("USERLOGGEDIN", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        FirebaseUser fuser = FirebaseAuth.getInstance().getCurrentUser();
+        Log.e("USERLOGGEDINFUSER", fuser.getUid());
+        firebaseFirestore.collection("users")
+                .document(user.getId())
+                .set(user, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        editProfileFragment.onUpdateSuccess();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("FAIL", "Failed to add information to database.");
+                    }
+                });
     }
 }

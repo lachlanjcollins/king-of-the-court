@@ -22,16 +22,14 @@ public class EditProfileFragment extends Fragment {
 
     private FragmentEditProfileBinding binding;
     private SharedViewModel sharedViewModel;
+    private NavController navController;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentEditProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
-
-        NavController navController = NavHostFragment.findNavController(this);
-
+        navController = NavHostFragment.findNavController(this);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         final EditText editFName = binding.editFName;
@@ -50,10 +48,19 @@ public class EditProfileFragment extends Fragment {
         binding.buttonSaveEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
+                update(editFName.getText().toString(),
+                        editLName.getText().toString(), editPosition.getText().toString());
             }
         });
 
         return root;
+    }
+
+    public void update(String fName, String lName, String position) {
+        sharedViewModel.updateUser(this, fName, lName, position);
+    }
+
+    public void onUpdateSuccess() {
+        navController.navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
     }
 }

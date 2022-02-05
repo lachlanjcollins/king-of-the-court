@@ -1,5 +1,6 @@
 package com.lachlan.kingofthecourt.ui.profile;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ActionOnlyNavDirections;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
+import com.lachlan.kingofthecourt.R;
 import com.lachlan.kingofthecourt.SharedViewModel;
 import com.lachlan.kingofthecourt.databinding.FragmentProfileBinding;
 import com.lachlan.kingofthecourt.login.LoginActivity;
@@ -27,20 +32,20 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textProfile;
-        final TextView textEmail = binding.textEmail;
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+        NavController navController = NavHostFragment.findNavController(this);
+
+        final TextView textProfile = binding.textProfile;
 
         sharedViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                textView.setText(user.getFirstName());
-                textEmail.setText(user.getEmail());
+                textProfile.setText(user.getFirstName() + " " + user.getLastName());
             }
         });
 
@@ -66,7 +71,7 @@ public class ProfileFragment extends Fragment {
         binding.editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                navController.navigate(R.id.action_navigation_profile_to_navigation_edit_profile);
             }
         });
 

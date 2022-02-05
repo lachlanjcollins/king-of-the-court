@@ -63,9 +63,6 @@ public class Database {
     }
 
     public void updateUser(EditProfileFragment editProfileFragment, User user) {
-        Log.e("USERLOGGEDIN", FirebaseAuth.getInstance().getCurrentUser().getUid());
-        FirebaseUser fuser = FirebaseAuth.getInstance().getCurrentUser();
-        Log.e("USERLOGGEDINFUSER", fuser.getUid());
         firebaseFirestore.collection("users")
                 .document(user.getId())
                 .set(user, SetOptions.merge())

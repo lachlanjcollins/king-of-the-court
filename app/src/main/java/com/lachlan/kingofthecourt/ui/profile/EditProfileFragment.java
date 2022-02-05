@@ -1,6 +1,8 @@
 package com.lachlan.kingofthecourt.ui.profile;
 
+import android.app.ActionBar;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,4 +65,5 @@ public class EditProfileFragment extends Fragment {
     public void onUpdateSuccess() {
         navController.navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.lachlan.kingofthecourt;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -10,12 +11,13 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.lachlan.kingofthecourt.databinding.ActivityMainBinding;
+import com.lachlan.kingofthecourt.model.User;
+import com.lachlan.kingofthecourt.ui.profile.ProfileViewModel;
 
 public class MainActivity extends AppCompatActivity {
-    // @TODO: Update class to use bindings on layout elements?
-    // @TODO: Clean up class to only use necessary stuff.
 
     private ActivityMainBinding binding;
+    private SharedViewModel sharedViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+
+        Database db = new Database();
+        db.getCurrentUser(this);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
@@ -32,5 +39,9 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+    }
+
+    public void setCurrentUser(User user) {
+        sharedViewModel.setUser(user);
     }
 }

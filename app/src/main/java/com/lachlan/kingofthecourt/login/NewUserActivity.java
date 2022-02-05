@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.lachlan.kingofthecourt.Constants;
 import com.lachlan.kingofthecourt.Database;
 import com.lachlan.kingofthecourt.MainActivity;
 import com.lachlan.kingofthecourt.Validation;
@@ -53,8 +54,9 @@ public class NewUserActivity extends AppCompatActivity {
         });
     }
 
-    public void onRegistrationSuccess() {
+    public void onRegistrationSuccess(User user) {
         Toast.makeText(this, "Registration Success", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(NewUserActivity.this, MainActivity.class));
+        Intent intent = new Intent(NewUserActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 }

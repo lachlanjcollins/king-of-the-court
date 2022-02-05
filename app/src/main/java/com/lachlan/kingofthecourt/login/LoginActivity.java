@@ -128,9 +128,9 @@ public class LoginActivity extends AppCompatActivity {
             auth.signInWithCredential(cred).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("users").document(user.getUid()).get()
+                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+                    firebaseFirestore.collection("users").document(firebaseUser.getUid()).get()
                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -150,4 +150,5 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

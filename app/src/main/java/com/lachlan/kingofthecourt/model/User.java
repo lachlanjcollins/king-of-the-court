@@ -1,5 +1,8 @@
 package com.lachlan.kingofthecourt.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class User {
     private String id;
     private String firstName;
@@ -21,6 +24,14 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.position = position;
+    }
+
+    protected User(Parcel in) {
+        id = in.readString();
+        firstName = in.readString();
+        lastName = in.readString();
+        email = in.readString();
+        position = in.readString();
     }
 
     public String getId() {

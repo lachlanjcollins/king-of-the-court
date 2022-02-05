@@ -1,6 +1,5 @@
 package com.lachlan.kingofthecourt.login;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -60,9 +59,9 @@ public class LoginFragment extends Fragment {
         auth.signInWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+                firebaseFirestore.collection("users").document(firebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {

@@ -10,6 +10,7 @@ android {
     defaultConfig {
         applicationId "com.lachlan.kingofthecourt"
         minSdk 30
+        minSdkVersion 21
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -48,6 +49,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-firestore:24.0.1'
+    implementation 'com.mapbox.maps:android:10.2.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

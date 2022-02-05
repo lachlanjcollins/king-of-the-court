@@ -12,7 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.lachlan.kingofthecourt.R;
 import com.lachlan.kingofthecourt.databinding.FragmentFinderBinding;
+import com.mapbox.maps.MapView;
+import com.mapbox.maps.Style;
 
 public class FinderFragment extends Fragment {
 
@@ -30,6 +33,10 @@ public class FinderFragment extends Fragment {
 
         binding = FragmentFinderBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+
+        String token = getString(R.string.mapbox_access_token);
+        MapView mapView = binding.mapView;
+        mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS);
 
         final TextView textView = binding.textFinder;
         finderViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {

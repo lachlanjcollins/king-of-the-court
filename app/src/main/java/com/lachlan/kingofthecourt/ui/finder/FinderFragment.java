@@ -33,6 +33,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.lachlan.kingofthecourt.databinding.FragmentFinderBinding;
+import com.lachlan.kingofthecourt.model.Court;
+
+import java.util.ArrayList;
 
 
 public class FinderFragment extends Fragment implements OnMapReadyCallback {
@@ -87,6 +90,7 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
         getLocationPermission();
         updateLocationUI();
         getDeviceLocation();
+        updateCourtLocations();
     }
 
     private void getLocationPermission() {
@@ -97,6 +101,13 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    public void updateCourtLocations() {
+        ArrayList<Court> courtsList = finderViewModel.getCourtsList();
+        for (Court court : courtsList) {
+            mMap.addMarker(new MarkerOptions().position(court.getLatLng()));
         }
     }
 

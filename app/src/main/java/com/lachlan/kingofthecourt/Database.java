@@ -5,15 +5,21 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.lachlan.kingofthecourt.login.NewUserActivity;
 import com.lachlan.kingofthecourt.model.User;
+import com.lachlan.kingofthecourt.ui.finder.FinderFragment;
 import com.lachlan.kingofthecourt.ui.profile.EditProfileFragment;
 import com.lachlan.kingofthecourt.ui.profile.EditProfileViewModel;
 
@@ -76,6 +82,22 @@ public class Database {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.e("FAIL", "Failed to add information to database.");
+                    }
+                });
+    }
+
+    public void getCourtLocations(FinderFragment finderFragment) {
+        firebaseFirestore.collection("cities").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("TAG", document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
                     }
                 });
     }

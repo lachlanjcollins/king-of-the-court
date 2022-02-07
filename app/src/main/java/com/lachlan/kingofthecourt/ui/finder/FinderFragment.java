@@ -18,6 +18,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -33,6 +35,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.lachlan.kingofthecourt.R;
 import com.lachlan.kingofthecourt.databinding.FragmentFinderBinding;
 import com.lachlan.kingofthecourt.model.Court;
 
@@ -90,11 +93,18 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
         getDeviceLocation();
         updateCourtLocations();
 
+        NavController navController = NavHostFragment.findNavController(this);
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
                 Court court = finderViewModel.getCourtsList().get((int) marker.getTag());
-                Log.e("COURT", "COURT clicked = " + court.getLocationName());
+
+//                Bundle bundle = new Bundle();
+//                bundle.put
+
+
+                navController.navigate(R.id.action_navigation_finder_to_navigation_court);
                 return false;
             }
         });

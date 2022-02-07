@@ -42,5 +42,15 @@
         android:id="@+id/navigation_finder"
         android:name="com.lachlan.kingofthecourt.ui.finder.FinderFragment"
         android:label="@string/title_finder"
-        tools:layout="@layout/fragment_finder" />
+        tools:layout="@layout/fragment_finder" >
+        <action
+            android:id="@+id/action_navigation_finder_to_navigation_court"
+            app:destination="@id/navigation_court"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_court"
+        android:name="com.lachlan.kingofthecourt.ui.finder.CourtFragment"
+        android:label="fragment_court"
+        tools:layout="@layout/fragment_court" />
 </navigation>

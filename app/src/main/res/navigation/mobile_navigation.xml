@@ -51,6 +51,9 @@
     <fragment
         android:id="@+id/navigation_court"
         android:name="com.lachlan.kingofthecourt.ui.finder.CourtFragment"
-        android:label="fragment_court"
-        tools:layout="@layout/fragment_court" />
+        tools:layout="@layout/fragment_court">
+        <argument
+            android:name="court"
+            app:argType="com.lachlan.kingofthecourt.model.Court" />
+    </fragment>
 </navigation>

@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -100,11 +101,9 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
             public boolean onMarkerClick(@NonNull Marker marker) {
                 Court court = finderViewModel.getCourtsList().get((int) marker.getTag());
 
-//                Bundle bundle = new Bundle();
-//                bundle.put
+                NavDirections nav = FinderFragmentDirections.actionNavigationFinderToNavigationCourt(court);
 
-
-                navController.navigate(R.id.action_navigation_finder_to_navigation_court);
+                navController.navigate(nav);
                 return false;
             }
         });

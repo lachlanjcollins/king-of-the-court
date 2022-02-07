@@ -5,7 +5,6 @@
     <string name="title_profile">Profile</string>
     <string name="title_finder">Finder</string>
     <string name="placeholder">Place Holder</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_edit_profile">Edit Profile</string>
 </resources>

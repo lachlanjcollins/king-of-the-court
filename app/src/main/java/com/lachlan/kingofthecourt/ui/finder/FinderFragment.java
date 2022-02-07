@@ -27,6 +27,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -84,13 +85,19 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng brisbane = new LatLng(-27.45, 153.055);
-        mMap.addMarker(new MarkerOptions().position(brisbane).title("Marker in Brisbane"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(brisbane));
         getLocationPermission();
         updateLocationUI();
         getDeviceLocation();
         updateCourtLocations();
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                Court court = finderViewModel.getCourtsList().get((int) marker.getTag());
+                Log.e("COURT", "COURT clicked = " + court.getLocationName());
+                return false;
+            }
+        });
     }
 
     private void getLocationPermission() {
@@ -107,7 +114,8 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
     public void updateCourtLocations() {
         ArrayList<Court> courtsList = finderViewModel.getCourtsList();
         for (Court court : courtsList) {
-            mMap.addMarker(new MarkerOptions().position(court.getLatLng()));
+            Marker marker = mMap.addMarker(new MarkerOptions().position(court.getLatLng()).title(court.getLocationName()));
+            marker.setTag(courtsList.indexOf(court));
         }
     }
 

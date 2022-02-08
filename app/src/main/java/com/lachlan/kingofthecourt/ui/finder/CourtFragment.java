@@ -24,7 +24,7 @@ public class CourtFragment extends Fragment {
 
         Court court = CourtFragmentArgs.fromBundle(getArguments()).getCourt();
         ((MainActivity) getActivity()).setActionBarTitle(court.getLocationName());
-        
+
         return view;
     }
 

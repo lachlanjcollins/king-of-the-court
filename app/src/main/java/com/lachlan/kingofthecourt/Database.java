@@ -1,8 +1,5 @@
 package com.lachlan.kingofthecourt;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import androidx.annotation.NonNull;
 
@@ -11,6 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -21,13 +19,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.lachlan.kingofthecourt.login.NewUserActivity;
 import com.lachlan.kingofthecourt.model.Court;
+import com.lachlan.kingofthecourt.model.Game;
 import com.lachlan.kingofthecourt.model.User;
-import com.lachlan.kingofthecourt.ui.finder.FinderFragment;
+import com.lachlan.kingofthecourt.ui.finder.CourtViewModel;
 import com.lachlan.kingofthecourt.ui.finder.FinderViewModel;
 import com.lachlan.kingofthecourt.ui.profile.EditProfileFragment;
-import com.lachlan.kingofthecourt.ui.profile.EditProfileViewModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Database {
     private FirebaseFirestore firebaseFirestore;
@@ -100,9 +99,10 @@ public class Database {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                String id = document.getId();
                                 String locationName = document.getData().get("locationName").toString();
                                 LatLng latLng = convertGeo((GeoPoint) document.getData().get("latLng"));
-                                courts.add(new Court(locationName, latLng));
+                                courts.add(new Court(id, locationName, latLng));
                             }
                             finderViewModel.onGetCourtsResult(courts);
                         } else {
@@ -110,6 +110,25 @@ public class Database {
                         }
                     }
                 });
+    }
+
+    public void getGamesList(Court court, CourtViewModel courtViewModel) {
+        ArrayList<Game> games = new ArrayList<>();
+        firebaseFirestore.collection("courts").document(court.getId()).collection("games").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Timestamp timestamp = (Timestamp) document.getData().get("timestamp");
+                        Date dateTime = timestamp.toDate();
+                        User creator = new User(document.getData().get("creator").toString());
+                        games.add(new Game(creator, dateTime));
+                    }
+                    courtViewModel.onGamesListRetrieved(games);
+                }
+            }
+        });
     }
 
     public LatLng convertGeo(GeoPoint geoPoint) {

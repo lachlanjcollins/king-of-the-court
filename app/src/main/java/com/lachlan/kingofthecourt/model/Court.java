@@ -5,27 +5,42 @@ import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+
 public class Court implements Parcelable {
+    private String id;
     private String locationName;
     private LatLng latLng;
+    private ArrayList<Game> gamesList;
 
     public Court() {
+        id = "";
         locationName = "";
         latLng = new LatLng(0, 0);
+        gamesList = new ArrayList<>();
     }
 
-    public Court(String locationName, LatLng latLng) {
+    public Court(String id, String locationName, LatLng latLng) {
+        this.id = id;
         this.locationName = locationName;
         this.latLng = latLng;
     }
 
+    public Court(String id, String locationName, LatLng latLng, ArrayList<Game> gamesList) {
+        this.locationName = locationName;
+        this.latLng = latLng;
+        this.gamesList = gamesList;
+    }
+
     protected Court(Parcel in) {
+        id = in.readString();
         locationName = in.readString();
         latLng = in.readParcelable(LatLng.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(locationName);
         dest.writeParcelable(latLng, flags);
     }
@@ -46,6 +61,14 @@ public class Court implements Parcelable {
             return new Court[size];
         }
     };
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getLocationName() {
         return locationName;

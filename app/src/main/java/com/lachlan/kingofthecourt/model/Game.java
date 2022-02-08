@@ -1,25 +1,52 @@
 package com.lachlan.kingofthecourt.model;
 
-import java.time.LocalDateTime;
+
+import java.util.Date;
 
 public class Game {
-    private Court court;
     private User creator;
-    private LocalDateTime time; //@TODO: Confirm the data type for time
+    private Date dateTime; //@TODO: Confirm the data type for time
     private Team[] teams;
 
     public Game() {
-        court = new Court();
         creator = new User();
-        time = LocalDateTime.now();
+        dateTime = new Date();
         teams = new Team[2];
     }
 
-    public Game(Court court, User creator, LocalDateTime time) {
-        this.court = court;
+    public Game(Date dateTime) {
+        creator = new User();
+        this.dateTime = dateTime;
+        teams = new Team[2];
+    }
+
+    public Game(User creator, Date dateTime) {
         this.creator = creator;
-        this.time = time;
+        this.dateTime = dateTime;
         teams = new Team[2];
     }
 
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public Date getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(Date time) {
+        this.dateTime = time;
+    }
+
+    public Team[] getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Team[] teams) {
+        this.teams = teams;
+    }
 }

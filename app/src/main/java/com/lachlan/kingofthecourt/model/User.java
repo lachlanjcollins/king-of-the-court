@@ -19,6 +19,16 @@ public class User {
         losses = 0;
     }
 
+    public User(String id) {
+        this.id = id;
+        firstName = "";
+        lastName = "";
+        email = "";
+        position = "";
+        wins = 0;
+        losses = 0;
+    }
+
     public User(String id, String firstName, String lastName, String email, String position) {
         this.id = id;
         this.firstName = firstName;

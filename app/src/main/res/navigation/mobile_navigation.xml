@@ -55,5 +55,15 @@
         <argument
             android:name="court"
             app:argType="com.lachlan.kingofthecourt.model.Court" />
+        <action
+            android:id="@+id/action_navigation_court_to_navigation_game"
+            app:destination="@id/navigation_game" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_game"
+        android:name="com.lachlan.kingofthecourt.ui.game.GameFragment">
+        <argument
+            android:name="game"
+            app:argType="com.lachlan.kingofthecourt.model.Game" />
     </fragment>
 </navigation>

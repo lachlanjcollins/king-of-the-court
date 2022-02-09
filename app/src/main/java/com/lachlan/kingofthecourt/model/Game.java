@@ -1,11 +1,14 @@
 package com.lachlan.kingofthecourt.model;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class Game {
+public class Game implements Parcelable {
     private User creator;
-    private Date dateTime; //@TODO: Confirm the data type for time
+    private Date dateTime;
     private Team[] teams;
 
     public Game() {
@@ -25,6 +28,21 @@ public class Game {
         this.dateTime = dateTime;
         teams = new Team[2];
     }
+
+    protected Game(Parcel in) {
+    }
+
+    public static final Creator<Game> CREATOR = new Creator<Game>() {
+        @Override
+        public Game createFromParcel(Parcel in) {
+            return new Game(in);
+        }
+
+        @Override
+        public Game[] newArray(int size) {
+            return new Game[size];
+        }
+    };
 
     public User getCreator() {
         return creator;
@@ -48,5 +66,14 @@ public class Game {
 
     public void setTeams(Team[] teams) {
         this.teams = teams;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
     }
 }

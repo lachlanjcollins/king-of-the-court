@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lachlan.kingofthecourt.R;
+import com.lachlan.kingofthecourt.databinding.RecyclerCourtBinding;
 import com.lachlan.kingofthecourt.model.Game;
 
 import java.util.ArrayList;
@@ -58,8 +59,8 @@ public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdap
             public void onClick(View view) {
                 Game selectedGame = gamesList.get(position);
                 Log.e("TEST", "THe game selected is: " + selectedGame.getDateTime().toString());
+                NavController navController = Navigation.findNavController(view);
                 NavDirections nav = CourtFragmentDirections.actionNavigationCourtToNavigationGame(selectedGame);
-                NavController navController = NavHostFragment.findNavController(); //@TODO: Get fragment?
                 navController.navigate(R.id.action_navigation_court_to_navigation_game);
             }
         });

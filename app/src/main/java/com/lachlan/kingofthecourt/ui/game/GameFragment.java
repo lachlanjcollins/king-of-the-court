@@ -10,11 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.lachlan.kingofthecourt.MainActivity;
-import com.lachlan.kingofthecourt.databinding.FragmentCourtBinding;
 import com.lachlan.kingofthecourt.databinding.FragmentGameBinding;
-import com.lachlan.kingofthecourt.model.Court;
 import com.lachlan.kingofthecourt.model.Game;
-import com.lachlan.kingofthecourt.ui.finder.CourtFragmentArgs;
+import com.lachlan.kingofthecourt.ui.game.GameFragmentArgs;
 
 public class GameFragment extends Fragment {
     private FragmentGameBinding binding;
@@ -25,7 +23,9 @@ public class GameFragment extends Fragment {
         binding = FragmentGameBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+
         Game game = GameFragmentArgs.fromBundle(getArguments()).getGame();
+//        Game game = GameFragmentArgs.fromBundle(getArguments()).getGame();
         ((MainActivity) getActivity()).setActionBarTitle(game.getDateTime().toString());
 
 

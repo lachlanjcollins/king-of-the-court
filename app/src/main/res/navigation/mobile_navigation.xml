@@ -61,7 +61,8 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_game"
-        android:name="com.lachlan.kingofthecourt.ui.game.GameFragment">
+        android:name="com.lachlan.kingofthecourt.ui.game.GameFragment"
+        tools:layout="@layout/fragment_game">
         <argument
             android:name="game"
             app:argType="com.lachlan.kingofthecourt.model.Game" />

@@ -27,6 +27,7 @@ import com.lachlan.kingofthecourt.ui.profile.EditProfileFragment;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Database {
     private FirebaseFirestore firebaseFirestore;
@@ -122,8 +123,14 @@ public class Database {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Timestamp timestamp = (Timestamp) document.getData().get("timestamp");
                         Date dateTime = timestamp.toDate();
+                        List<String> playerIDs = (List<String>) document.get("players");
+                        ArrayList<User> players = new ArrayList<>();
+                        for (String playerID : playerIDs) {
+                            User player = new User(playerID);
+                            players.add(player);
+                        }
                         User creator = new User(document.getData().get("creator").toString());
-                        games.add(new Game(creator, dateTime));
+                        games.add(new Game(creator, dateTime, players));
                     }
                     courtViewModel.onGamesListRetrieved(games);
                 }

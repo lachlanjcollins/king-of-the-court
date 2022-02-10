@@ -8,14 +8,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.lachlan.kingofthecourt.MainActivity;
 import com.lachlan.kingofthecourt.databinding.FragmentGameBinding;
+import com.lachlan.kingofthecourt.model.Court;
 import com.lachlan.kingofthecourt.model.Game;
 import com.lachlan.kingofthecourt.ui.game.GameFragmentArgs;
 
 public class GameFragment extends Fragment {
     private FragmentGameBinding binding;
+    private GameViewModel gameViewModel;
 
     @Nullable
     @Override
@@ -23,11 +26,14 @@ public class GameFragment extends Fragment {
         binding = FragmentGameBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-
         Game game = GameFragmentArgs.fromBundle(getArguments()).getGame();
-//        Game game = GameFragmentArgs.fromBundle(getArguments()).getGame();
-        ((MainActivity) getActivity()).setActionBarTitle(game.getDateTime().toString());
+        Court court = GameFragmentArgs.fromBundle(getArguments()).getCourt();
+        ((MainActivity) getActivity()).setActionBarTitle("Game Details");
 
+        gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
+        gameViewModel.setGame(game);
+        gameViewModel.setCourt(court);
+        
 
         return view;
     }

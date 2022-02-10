@@ -4,29 +4,37 @@ package com.lachlan.kingofthecourt.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Game implements Parcelable {
     private User creator;
     private Date dateTime;
-    private Team[] teams;
+    private ArrayList<User> players;
 
     public Game() {
         creator = new User();
         dateTime = new Date();
-        teams = new Team[2];
+        players = new ArrayList<>();
     }
 
     public Game(Date dateTime) {
         creator = new User();
         this.dateTime = dateTime;
-        teams = new Team[2];
+        players = new ArrayList<>();
     }
 
     public Game(User creator, Date dateTime) {
         this.creator = creator;
         this.dateTime = dateTime;
-        teams = new Team[2];
+        players = new ArrayList<>();
+    }
+
+    public Game(User creator, Date dateTime, ArrayList<User> players) {
+        this.creator = creator;
+        this.dateTime = dateTime;
+        this.players = players;
     }
 
     protected Game(Parcel in) {
@@ -60,12 +68,12 @@ public class Game implements Parcelable {
         this.dateTime = time;
     }
 
-    public Team[] getTeams() {
-        return teams;
+    public ArrayList<User> getPlayers() {
+        return players;
     }
 
-    public void setTeams(Team[] teams) {
-        this.teams = teams;
+    public void setPlayers(ArrayList<User> players) {
+        this.players = players;
     }
 
     @Override

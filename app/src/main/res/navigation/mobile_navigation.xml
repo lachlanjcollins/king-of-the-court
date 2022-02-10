@@ -66,5 +66,8 @@
         <argument
             android:name="game"
             app:argType="com.lachlan.kingofthecourt.model.Game" />
+        <argument
+            android:name="court"
+            app:argType="com.lachlan.kingofthecourt.model.Court" />
     </fragment>
 </navigation>

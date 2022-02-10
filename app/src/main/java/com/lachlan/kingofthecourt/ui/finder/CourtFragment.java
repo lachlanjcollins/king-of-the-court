@@ -41,7 +41,7 @@ public class CourtFragment extends Fragment {
             @Override
             public void onChanged(String s) {
                 RecyclerView recyclerView = binding.recyclerCourt;
-                adapter = new CourtRecyclerAdapter(courtViewModel.getGamesList());
+                adapter = new CourtRecyclerAdapter(courtViewModel.getGamesList(), court);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());

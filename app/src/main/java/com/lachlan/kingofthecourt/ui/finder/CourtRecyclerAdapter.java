@@ -16,19 +16,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lachlan.kingofthecourt.R;
 import com.lachlan.kingofthecourt.databinding.RecyclerCourtBinding;
+import com.lachlan.kingofthecourt.model.Court;
 import com.lachlan.kingofthecourt.model.Game;
 
 import java.util.ArrayList;
 
 public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdapter.ViewHolder> {
     private ArrayList<Game> gamesList;
+    private Court court;
 
-    public CourtRecyclerAdapter(ArrayList<Game> gamesList) {
+    public CourtRecyclerAdapter(ArrayList<Game> gamesList, Court court) {
         this.gamesList = gamesList;
+        this.court = court;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textName;
+        private TextView textPlayers;
         private AppCompatButton buttonViewGame;
         private RecyclerCourtBinding binding;
 
@@ -37,7 +41,7 @@ public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdap
             this.binding = binding;
             buttonViewGame = binding.buttonViewGame;
             textName = binding.textName;
-
+            textPlayers = binding.textPlayers;
         }
     }
 
@@ -53,15 +57,15 @@ public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull CourtRecyclerAdapter.ViewHolder holder, int position) {
-        holder.textName.setText(gamesList.get(position).getDateTime().toString()); //@TODO: Placeholder
+        holder.textName.setText(gamesList.get(position).getDateTime().toString());
+        holder.textPlayers.setText(gamesList.get(position).getPlayers().size() + " / 10 Players");
         holder.buttonViewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Game selectedGame = gamesList.get(position);
-                Log.e("TEST", "THe game selected is: " + selectedGame.getDateTime().toString());
                 NavController navController = Navigation.findNavController(view);
-                NavDirections nav = CourtFragmentDirections.actionNavigationCourtToNavigationGame(selectedGame);
-                navController.navigate(R.id.action_navigation_court_to_navigation_game);
+                NavDirections nav = CourtFragmentDirections.actionNavigationCourtToNavigationGame(selectedGame, court);
+                navController.navigate(nav);
             }
         });
     }

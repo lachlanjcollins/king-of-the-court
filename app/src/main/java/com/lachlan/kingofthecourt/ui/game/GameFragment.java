@@ -30,15 +30,12 @@ import java.util.TimeZone;
 public class GameFragment extends Fragment {
     private FragmentGameBinding binding;
     private GameViewModel gameViewModel;
-    private Database db;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentGameBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        db = new Database();
-        String currentUserID = db.getCurrentUserID();
 
         Game game = GameFragmentArgs.fromBundle(getArguments()).getGame();
         Court court = GameFragmentArgs.fromBundle(getArguments()).getCourt();

@@ -1,5 +1,6 @@
 package com.lachlan.kingofthecourt.ui.game;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.lachlan.kingofthecourt.Database;
@@ -11,9 +12,11 @@ public class GameViewModel extends ViewModel {
     private Court court;
     private Game game;
     private Database db;
+    private MutableLiveData<Integer> numPlayers;
 
     public GameViewModel() {
         db = new Database();
+        numPlayers = new MutableLiveData<>();
     }
 
     public boolean isCreator() {
@@ -22,7 +25,6 @@ public class GameViewModel extends ViewModel {
 
     public boolean inGame() {
         boolean bool = false;
-
         for (User player : game.getPlayers()) {
             if (player.getId().equals(db.getCurrentUserID()))
                 bool = true;
@@ -30,8 +32,21 @@ public class GameViewModel extends ViewModel {
         return bool;
     }
 
+    public boolean isGameFull() {
+        return (game.getPlayers().size() == 10);
+    }
+
+    public void joinGame() {
+        if (!inGame()) {
+            game.getPlayers().add(new User(db.getCurrentUserID()));
+            numPlayers.setValue(game.getPlayers().size());
+            db.joinGame(court, game);
+        }
+    }
+
     public void setGame(Game game) {
         this.game = game;
+        numPlayers.setValue(game.getPlayers().size());
     }
 
     public void setCourt(Court court) {
@@ -44,5 +59,13 @@ public class GameViewModel extends ViewModel {
 
     public Court getCourt() {
         return court;
+    }
+
+    public MutableLiveData<Integer> getNumPlayers() {
+        return numPlayers;
+    }
+
+    public void setNumPlayers(MutableLiveData<Integer> numPlayers) {
+        this.numPlayers = numPlayers;
     }
 }

@@ -30,7 +30,7 @@ public class CourtFragment extends Fragment {
         View view = binding.getRoot();
 
         Court court = CourtFragmentArgs.fromBundle(getArguments()).getCourt();
-        ((MainActivity) getActivity()).setActionBarTitle(court.getLocationName());
+        ((MainActivity) getActivity()).setActionBarTitle(court.getLocationName() + " Games");
 
         courtViewModel =
                 new ViewModelProvider(this).get(CourtViewModel.class);

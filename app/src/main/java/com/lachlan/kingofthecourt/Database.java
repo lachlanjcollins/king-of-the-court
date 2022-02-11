@@ -12,6 +12,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -121,6 +122,7 @@ public class Database {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
+                        String id = document.getId();
                         Timestamp timestamp = (Timestamp) document.getData().get("timestamp");
                         Date dateTime = timestamp.toDate();
                         List<String> playerIDs = (List<String>) document.get("players");
@@ -130,12 +132,18 @@ public class Database {
                             players.add(player);
                         }
                         User creator = new User(document.getData().get("creator").toString());
-                        games.add(new Game(creator, dateTime, players));
+                        games.add(new Game(id, creator, dateTime, players));
                     }
                     courtViewModel.onGamesListRetrieved(games);
                 }
             }
         });
+    }
+
+    public void joinGame(Court court, Game game) {
+        firebaseFirestore.collection("courts")
+                .document(court.getId()).collection("games")
+                .document(game.getId()).update("players", FieldValue.arrayUnion(getCurrentUserID()));
     }
 
     public LatLng convertGeo(GeoPoint geoPoint) {

@@ -48,14 +48,8 @@ public class GameFragment extends Fragment {
         gameViewModel.setCourt(court);
 
         binding.textLocationName.setText(court.getLocationName());
-
-        DateFormat day = new SimpleDateFormat("EE");
-        DateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-        DateFormat time = new SimpleDateFormat("hh:mm:ss a"); //@TODO: Figure out timezones
-        Date dateTime = game.getDateTime();
-
-        binding.textDate.setText(day.format(dateTime) + " " + date.format(dateTime));
-        binding.textTime.setText(time.format(dateTime));
+        binding.textDate.setText(gameViewModel.getFormattedDate());
+        binding.textTime.setText(gameViewModel.getFormattedTime());
 
         gameViewModel.getNumPlayers().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
@@ -63,11 +57,6 @@ public class GameFragment extends Fragment {
                 binding.textNumPlayers.setText(integer + " / 10");
             }
         });
-
-        if (gameViewModel.isCreator() || gameViewModel.inGame() || gameViewModel.isGameFull()) {
-            binding.buttonJoinGame.setClickable(false);
-            binding.buttonJoinGame.setBackgroundResource(R.drawable.bg_button_grey);
-        }
 
         binding.buttonJoinGame.setOnClickListener(new View.OnClickListener() {
             @Override

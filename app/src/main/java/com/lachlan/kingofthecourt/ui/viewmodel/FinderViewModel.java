@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.lachlan.kingofthecourt.data.database.RemoteDatabase;
+import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.data.entity.Court;
 
 import java.util.ArrayList;
@@ -12,13 +12,13 @@ import java.util.ArrayList;
 public class FinderViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
-    private RemoteDatabase db;
+    private RemoteDB db;
     private ArrayList<Court> courtsList;
 
     public FinderViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is finder fragment");
-        db = new RemoteDatabase();
+        db = new RemoteDB();
         db.getCourtLocations(this);
     }
 

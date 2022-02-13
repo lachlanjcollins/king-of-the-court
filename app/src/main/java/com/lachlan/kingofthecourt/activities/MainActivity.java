@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.lachlan.kingofthecourt.data.database.RemoteDatabase;
+import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.R;
 import com.lachlan.kingofthecourt.ui.viewmodel.SharedViewModel;
 import com.lachlan.kingofthecourt.databinding.ActivityMainBinding;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
-        RemoteDatabase db = new RemoteDatabase();
+        RemoteDB db = new RemoteDB();
         db.getCurrentUser(this);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);

@@ -31,16 +31,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class RemoteDatabase {
+public class RemoteDB {
     private FirebaseFirestore firebaseFirestore;
 
-    public RemoteDatabase() {
+    public RemoteDB() {
         firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     public void registerUser(NewUserActivity activity, User userInfo) {
         firebaseFirestore.collection("users")
-                .document(userInfo.getId())
+                .document(userInfo.getUserId())
                 .set(userInfo, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -78,7 +78,7 @@ public class RemoteDatabase {
 
     public void updateUser(EditProfileFragment editProfileFragment, User user) {
         firebaseFirestore.collection("users")
-                .document(user.getId())
+                .document(user.getUserId())
                 .set(user, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -117,7 +117,7 @@ public class RemoteDatabase {
 
     public void getGamesList(Court court, CourtViewModel courtViewModel) {
         ArrayList<Game> games = new ArrayList<>();
-        firebaseFirestore.collection("courts").document(court.getId()).collection("games").get()
+        firebaseFirestore.collection("courts").document(court.getCourtId()).collection("games").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -143,8 +143,8 @@ public class RemoteDatabase {
 
     public void joinGame(Court court, Game game) {
         firebaseFirestore.collection("courts")
-                .document(court.getId()).collection("games")
-                .document(game.getId()).update("players", FieldValue.arrayUnion(getCurrentUserID()));
+                .document(court.getCourtId()).collection("games")
+                .document(game.getGameId()).update("players", FieldValue.arrayUnion(getCurrentUserID()));
     }
 
     public LatLng convertGeo(GeoPoint geoPoint) {

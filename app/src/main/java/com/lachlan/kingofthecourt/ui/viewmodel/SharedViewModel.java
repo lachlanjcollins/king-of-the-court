@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.lachlan.kingofthecourt.data.database.RemoteDatabase;
+import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.data.entity.User;
 import com.lachlan.kingofthecourt.fragments.EditProfileFragment;
 
@@ -24,7 +24,7 @@ public class SharedViewModel extends ViewModel {
     }
 
     public void updateUser(EditProfileFragment editProfileFragment, String fName, String lName, String position) {
-        RemoteDatabase db = new RemoteDatabase();
+        RemoteDB db = new RemoteDB();
 
         User user = mUser.getValue();
 

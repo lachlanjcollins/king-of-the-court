@@ -3,7 +3,7 @@ package com.lachlan.kingofthecourt.ui.viewmodel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.lachlan.kingofthecourt.data.database.RemoteDatabase;
+import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.entity.User;
@@ -15,14 +15,14 @@ import java.util.Date;
 public class GameViewModel extends ViewModel {
     private Court court;
     private Game game;
-    private RemoteDatabase db;
+    private RemoteDB db;
     private boolean isCreator;
     private MutableLiveData<Integer> numPlayers;
     private MutableLiveData<Boolean> isGameFull;
     private MutableLiveData<Boolean> inGame;
 
     public GameViewModel() {
-        db = new RemoteDatabase();
+        db = new RemoteDB();
         numPlayers = new MutableLiveData<>();
         isGameFull = new MutableLiveData<>();
         inGame = new MutableLiveData<>();
@@ -43,19 +43,19 @@ public class GameViewModel extends ViewModel {
     }
 
     public void leaveGame() {
-        game.getPlayers().removeIf(user -> user.getId().equals(db.getCurrentUserID()));
+        game.getPlayers().removeIf(user -> user.getUserId().equals(db.getCurrentUserID()));
     }
 
     public void setGame(Game game) {
         this.game = game;
         numPlayers.setValue(game.getPlayers().size());
-        if (db.getCurrentUserID().equals(game.getCreator().getId())) {
+        if (db.getCurrentUserID().equals(game.getCreator().getUserId())) {
             isCreator = true;
             inGame.setValue(true);
         } else {
             isCreator = false;
             for (User player : game.getPlayers()) {
-                if (player.getId().equals(db.getCurrentUserID()))
+                if (player.getUserId().equals(db.getCurrentUserID()))
                     inGame.setValue(true);
                 else
                     inGame.setValue(false);

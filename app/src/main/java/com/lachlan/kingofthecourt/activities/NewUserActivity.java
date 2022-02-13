@@ -8,7 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.lachlan.kingofthecourt.data.database.RemoteDatabase;
+import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.util.Validation;
 import com.lachlan.kingofthecourt.databinding.ActivityNewUserBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +28,7 @@ public class NewUserActivity extends AppCompatActivity {
         setContentView(view);
         
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        RemoteDatabase db = new RemoteDatabase();
+        RemoteDB db = new RemoteDB();
         Validation valid = new Validation();
 
         binding.buttonSave.setOnClickListener(new View.OnClickListener() {

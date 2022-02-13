@@ -14,14 +14,13 @@ import java.util.Date;
 @Entity
 public class Game implements Parcelable {
     @PrimaryKey
-    @NonNull
-    private String id;
+    private String gameId;
     private User creator;
     private Date dateTime;
     private ArrayList<User> players;
 
     public Game() {
-        id = "";
+        gameId = "";
         creator = new User();
         dateTime = new Date();
         players = new ArrayList<>();
@@ -45,8 +44,8 @@ public class Game implements Parcelable {
         this.players = players;
     }
 
-    public Game(String id, User creator, Date dateTime, ArrayList<User> players) {
-        this.id = id;
+    public Game(String gameId, User creator, Date dateTime, ArrayList<User> players) {
+        this.gameId = gameId;
         this.creator = creator;
         this.dateTime = dateTime;
         this.players = players;
@@ -91,12 +90,12 @@ public class Game implements Parcelable {
         this.players = players;
     }
 
-    public String getId() {
-        return id;
+    public String getGameId() {
+        return gameId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 
     @Override

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.lachlan.kingofthecourt.data.database.RemoteDatabase;
+import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.entity.Game;
 
@@ -12,13 +12,13 @@ import java.util.ArrayList;
 
 public class CourtViewModel extends ViewModel {
     private Court court;
-    private RemoteDatabase db;
+    private RemoteDB db;
     private ArrayList<Game> gamesList;
     private MutableLiveData<String> listReady;
 
     public CourtViewModel() {
         listReady = new MutableLiveData<>();
-        db = new RemoteDatabase();
+        db = new RemoteDB();
     }
 
     public void setCourt(Court court) {

@@ -18,6 +18,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -27,12 +30,17 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.lachlan.kingofthecourt.R;
 import com.lachlan.kingofthecourt.databinding.FragmentFinderBinding;
+import com.lachlan.kingofthecourt.model.Court;
+
+import java.util.ArrayList;
 
 
 public class FinderFragment extends Fragment implements OnMapReadyCallback {
@@ -81,12 +89,24 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng brisbane = new LatLng(-27.45, 153.055);
-        mMap.addMarker(new MarkerOptions().position(brisbane).title("Marker in Brisbane"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(brisbane));
         getLocationPermission();
         updateLocationUI();
         getDeviceLocation();
+        updateCourtLocations();
+
+        NavController navController = NavHostFragment.findNavController(this);
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                Court court = finderViewModel.getCourtsList().get((int) marker.getTag());
+
+                NavDirections nav = FinderFragmentDirections.actionNavigationFinderToNavigationCourt(court);
+
+                navController.navigate(nav);
+                return false;
+            }
+        });
     }
 
     private void getLocationPermission() {
@@ -97,6 +117,14 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    public void updateCourtLocations() {
+        ArrayList<Court> courtsList = finderViewModel.getCourtsList();
+        for (Court court : courtsList) {
+            Marker marker = mMap.addMarker(new MarkerOptions().position(court.getLatLng()).title(court.getLocationName()));
+            marker.setTag(courtsList.indexOf(court));
         }
     }
 

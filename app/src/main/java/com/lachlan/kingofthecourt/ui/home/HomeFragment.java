@@ -16,9 +16,6 @@ import com.lachlan.kingofthecourt.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
-    // @TODO: Update class to use bindings on layout elements?
-    // @TODO: Clean up class to only use necessary stuff.
-
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
 
@@ -28,16 +25,17 @@ public class HomeFragment extends Fragment {
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        View view = binding.getRoot();
 
         final TextView textView = binding.textHome;
+
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
-        return root;
+        return view;
     }
 
     @Override

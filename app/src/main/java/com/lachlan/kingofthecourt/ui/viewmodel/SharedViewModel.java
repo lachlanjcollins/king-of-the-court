@@ -1,37 +1,35 @@
 package com.lachlan.kingofthecourt.ui.viewmodel;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.data.entity.User;
+import com.lachlan.kingofthecourt.data.repository.UserRepository;
 import com.lachlan.kingofthecourt.fragments.EditProfileFragment;
 
-public class SharedViewModel extends ViewModel {
-    private MutableLiveData<User> mUser;
+import java.util.List;
 
-    public SharedViewModel() {
-        mUser = new MutableLiveData<>();
-    }
+public class SharedViewModel extends AndroidViewModel {
+    private LiveData<User> currentUser;
+    private UserRepository userRepository;
 
-    public void setUser(User user) {
-        mUser.setValue(user);
+    public SharedViewModel(Application application) {
+        super(application);
+        userRepository = new UserRepository(application);
+        currentUser = userRepository.getCurrentUser();
     }
 
     public LiveData<User> getUser() {
-        return mUser;
+        return currentUser;
     }
 
-    public void updateUser(EditProfileFragment editProfileFragment, String fName, String lName, String position) {
-        RemoteDB db = new RemoteDB();
-
-        User user = mUser.getValue();
-
-        user.setFirstName(fName);
-        user.setLastName(lName);
-        user.setPosition(position);
-
-        db.updateUser(editProfileFragment, user);
+    public void updateUser(User user) {
+        userRepository.updateUser(user);
     }
+
 }

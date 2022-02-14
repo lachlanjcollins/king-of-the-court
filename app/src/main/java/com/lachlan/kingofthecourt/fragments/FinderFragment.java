@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
@@ -41,6 +42,7 @@ import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.ui.viewmodel.FinderViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FinderFragment extends Fragment implements OnMapReadyCallback {
@@ -99,7 +101,7 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
-                Court court = finderViewModel.getCourtsList().get((int) marker.getTag());
+                Court court = finderViewModel.getCourtsList().getValue().get((int) marker.getTag());
 
                 NavDirections nav = FinderFragmentDirections.actionNavigationFinderToNavigationCourt(court);
 
@@ -121,11 +123,18 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public void updateCourtLocations() {
-        ArrayList<Court> courtsList = finderViewModel.getCourtsList();
-        for (Court court : courtsList) {
-            Marker marker = mMap.addMarker(new MarkerOptions().position(court.getLatLng()).title(court.getLocationName()));
-            marker.setTag(courtsList.indexOf(court));
-        }
+        finderViewModel.getCourtsList().observe(this, new Observer<List<Court>>() {
+            @Override
+            public void onChanged(List<Court> courts) {
+                for (Court court : courts) {
+                    com.lachlan.kingofthecourt.data.entity.Location location = court.getLocation();
+                    Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title(court.getLocationName()));
+                    marker.setTag(courts.indexOf(court));
+                }
+            }
+        });
+
+
     }
 
     @Override

@@ -13,42 +13,51 @@ import java.util.Date;
 
 @Entity
 public class Game implements Parcelable {
+
     @PrimaryKey
+    @NonNull
     private String gameId;
-    private User creator;
+
+    private String creatorId;
+//    private User creator;
+
     private Date dateTime;
-    private ArrayList<User> players;
+
+    private String courtId;
+
+//    private ArrayList<User> players; @TODO: Fix later
 
     public Game() {
         gameId = "";
-        creator = new User();
+        creatorId = "";
+//        creator = new User();
         dateTime = new Date();
-        players = new ArrayList<>();
+//        players = new ArrayList<>();
     }
 
     public Game(Date dateTime) {
-        creator = new User();
+        creatorId = "";
         this.dateTime = dateTime;
-        players = new ArrayList<>();
+//        players = new ArrayList<>();
     }
 
     public Game(User creator, Date dateTime) {
-        this.creator = creator;
+        this.creatorId = creator.getUserId();
         this.dateTime = dateTime;
-        players = new ArrayList<>();
+//        players = new ArrayList<>();
     }
 
     public Game(User creator, Date dateTime, ArrayList<User> players) {
-        this.creator = creator;
+        this.creatorId = creator.getUserId();
         this.dateTime = dateTime;
-        this.players = players;
+//        this.players = players;
     }
 
     public Game(String gameId, User creator, Date dateTime, ArrayList<User> players) {
         this.gameId = gameId;
-        this.creator = creator;
+        this.creatorId = creator.getUserId();
         this.dateTime = dateTime;
-        this.players = players;
+//        this.players = players;
     }
 
     protected Game(Parcel in) {
@@ -66,12 +75,21 @@ public class Game implements Parcelable {
         }
     };
 
-    public User getCreator() {
-        return creator;
+//    public User getCreator() {
+//        return creator;
+//    }
+//
+//    public void setCreator(User creator) {
+//        this.creator = creator;
+//    }
+
+
+    public String getCreatorId() {
+        return creatorId;
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
     }
 
     public Date getDateTime() {
@@ -82,12 +100,21 @@ public class Game implements Parcelable {
         this.dateTime = time;
     }
 
-    public ArrayList<User> getPlayers() {
-        return players;
+//    public ArrayList<User> getPlayers() {
+//        return players;
+//    }
+
+//    public void setPlayers(ArrayList<User> players) {
+//        this.players = players;
+//    }
+
+
+    public String getCourtId() {
+        return courtId;
     }
 
-    public void setPlayers(ArrayList<User> players) {
-        this.players = players;
+    public void setCourtId(String courtId) {
+        this.courtId = courtId;
     }
 
     public String getGameId() {

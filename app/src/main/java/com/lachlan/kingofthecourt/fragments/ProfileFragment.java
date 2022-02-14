@@ -35,7 +35,10 @@ public class ProfileFragment extends Fragment {
         View root = binding.getRoot();
 
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel = ViewModelProvider
+                .AndroidViewModelFactory
+                .getInstance(getActivity().getApplication())
+                .create(SharedViewModel.class);
 
         NavController navController = NavHostFragment.findNavController(this);
 

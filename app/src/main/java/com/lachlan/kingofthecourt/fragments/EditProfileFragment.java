@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.lachlan.kingofthecourt.R;
 import com.lachlan.kingofthecourt.ui.viewmodel.SharedViewModel;
 import com.lachlan.kingofthecourt.databinding.FragmentEditProfileBinding;
@@ -30,7 +31,10 @@ public class EditProfileFragment extends Fragment {
         View root = binding.getRoot();
 
         navController = NavHostFragment.findNavController(this);
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel = ViewModelProvider
+                .AndroidViewModelFactory
+                .getInstance(getActivity().getApplication())
+                .create(SharedViewModel.class);
 
         final EditText editFName = binding.editFName;
         final EditText editLName = binding.editLName;
@@ -48,20 +52,15 @@ public class EditProfileFragment extends Fragment {
         binding.buttonSaveEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                update(editFName.getText().toString(),
-                        editLName.getText().toString(), editPosition.getText().toString());
+                User user = sharedViewModel.getUser().getValue();
+                user.setFirstName(editFName.getText().toString());
+                user.setLastName(editLName.getText().toString());
+                user.setPosition(editPosition.getText().toString());
+                sharedViewModel.updateUser(user);
+                navController.navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
             }
         });
 
         return root;
     }
-
-    public void update(String fName, String lName, String position) {
-        sharedViewModel.updateUser(this, fName, lName, position);
-    }
-
-    public void onUpdateSuccess() {
-        navController.navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
-    }
-
 }

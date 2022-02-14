@@ -6,14 +6,21 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class User {
+
     @PrimaryKey
     @NonNull
     private String userId;
+
     private String firstName;
+
     private String lastName;
+
     private String email;
+
     private String position;
+
     private int wins;
+
     private int losses;
 
     public User() {

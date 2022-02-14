@@ -34,8 +34,8 @@ public class GameViewModel extends ViewModel {
 
     public void joinGame() {
         if (!inGame.getValue() && !isCreator && !isGameFull.getValue()) {
-            game.getPlayers().add(new User(db.getCurrentUserID()));
-            numPlayers.setValue(game.getPlayers().size());
+//            game.getPlayers().add(new User(db.getCurrentUserID()));
+//            numPlayers.setValue(game.getPlayers().size());
             inGame.setValue(true);
             updateIsGameFull();
             db.joinGame(court, game);
@@ -43,24 +43,24 @@ public class GameViewModel extends ViewModel {
     }
 
     public void leaveGame() {
-        game.getPlayers().removeIf(user -> user.getUserId().equals(db.getCurrentUserID()));
+//        game.getPlayers().removeIf(user -> user.getUserId().equals(db.getCurrentUserID()));
     }
 
     public void setGame(Game game) {
         this.game = game;
-        numPlayers.setValue(game.getPlayers().size());
-        if (db.getCurrentUserID().equals(game.getCreator().getUserId())) {
-            isCreator = true;
-            inGame.setValue(true);
-        } else {
-            isCreator = false;
-            for (User player : game.getPlayers()) {
-                if (player.getUserId().equals(db.getCurrentUserID()))
-                    inGame.setValue(true);
-                else
-                    inGame.setValue(false);
-            }
-        }
+//        numPlayers.setValue(game.getPlayers().size());
+//        if (db.getCurrentUserID().equals(game.getCreator().getUserId())) {
+//            isCreator = true;
+//            inGame.setValue(true);
+//        } else {
+//            isCreator = false;
+//            for (User player : game.getPlayers()) {
+//                if (player.getUserId().equals(db.getCurrentUserID()))
+//                    inGame.setValue(true);
+//                else
+//                    inGame.setValue(false);
+//            }
+//        }
     }
 
     public void setCourt(Court court) {

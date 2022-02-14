@@ -22,7 +22,10 @@ import com.lachlan.kingofthecourt.activities.MainActivity;
 import com.lachlan.kingofthecourt.activities.NewUserActivity;
 import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.entity.Game;
+import com.lachlan.kingofthecourt.data.entity.Location;
 import com.lachlan.kingofthecourt.data.entity.User;
+import com.lachlan.kingofthecourt.data.repository.CourtRepository;
+import com.lachlan.kingofthecourt.data.repository.UserRepository;
 import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
 import com.lachlan.kingofthecourt.ui.viewmodel.FinderViewModel;
 import com.lachlan.kingofthecourt.fragments.EditProfileFragment;
@@ -65,27 +68,22 @@ public class RemoteDB {
         return currentUserID;
     }
 
-    public void getCurrentUser(MainActivity activity) {
+        public void getCurrentUser(UserRepository userRepository) {
         firebaseFirestore.collection("users").document(getCurrentUserID()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
-                activity.setCurrentUser(user);
+                Log.e("TAG", "The current user is: " + user.getUserId());
+                userRepository.insertUser(user);
             }
         });
     }
 
-    public void updateUser(EditProfileFragment editProfileFragment, User user) {
+    public void updateUser(User user) {
         firebaseFirestore.collection("users")
                 .document(user.getUserId())
                 .set(user, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        editProfileFragment.onUpdateSuccess();
-                    }
-                })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
@@ -94,8 +92,7 @@ public class RemoteDB {
                 });
     }
 
-    public void getCourtLocations(FinderViewModel finderViewModel) {
-        ArrayList<Court> courts = new ArrayList<>();
+    public void getAllCourts(CourtRepository courtRepository) {
         firebaseFirestore.collection("courts").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -104,10 +101,9 @@ public class RemoteDB {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String id = document.getId();
                                 String locationName = document.getData().get("locationName").toString();
-                                LatLng latLng = convertGeo((GeoPoint) document.getData().get("latLng"));
-                                courts.add(new Court(id, locationName, latLng));
+                                Location location = convertGeoToLocation((GeoPoint) document.getData().get("latLng"));
+                                courtRepository.insertCourt(new Court(id, locationName, location));
                             }
-                            finderViewModel.onGetCourtsResult(courts);
                         } else {
                             Log.d("FAIL", "Error getting documents: ", task.getException());
                         }
@@ -152,5 +148,11 @@ public class RemoteDB {
         double lon = geoPoint.getLongitude();
         LatLng latLng = new LatLng(lat, lon);
         return latLng;
+    }
+
+    public Location convertGeoToLocation(GeoPoint geoPoint) {
+        double lat = geoPoint.getLatitude();
+        double lon = geoPoint.getLongitude();
+        return new Location(lat, lon);
     }
 }

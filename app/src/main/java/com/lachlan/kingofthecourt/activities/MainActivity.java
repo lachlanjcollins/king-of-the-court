@@ -12,11 +12,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.R;
 import com.lachlan.kingofthecourt.ui.viewmodel.SharedViewModel;
 import com.lachlan.kingofthecourt.databinding.ActivityMainBinding;
-import com.lachlan.kingofthecourt.data.entity.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,10 +38,12 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
-
-        RemoteDB db = new RemoteDB();
-        db.getCurrentUser(this);
+        // The shared view model instantiates the current user object (LiveData)
+//        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        sharedViewModel = ViewModelProvider
+                .AndroidViewModelFactory
+                .getInstance(getApplication())
+                .create(SharedViewModel.class);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
@@ -59,7 +59,4 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(title);
     }
 
-    public void setCurrentUser(User user) {
-        sharedViewModel.setUser(user);
-    }
 }

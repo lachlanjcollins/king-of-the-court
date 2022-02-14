@@ -55,8 +55,8 @@ public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull CourtRecyclerAdapter.ViewHolder holder, int position) {
-        holder.textName.setText(gamesList.get(position).getDateTime().toString());
-        holder.textPlayers.setText(gamesList.get(position).getPlayers().size() + " / 10 Players");
+//        holder.textName.setText(gamesList.get(position).getDateTime().toString());
+//        holder.textPlayers.setText(gamesList.get(position).getPlayers().size() + " / 10 Players");
         holder.buttonViewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

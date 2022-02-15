@@ -4,10 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.lachlan.kingofthecourt.data.entity.Game;
+import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
 
 import java.util.List;
 
@@ -19,7 +22,15 @@ public interface GameDAO {
     @Query("SELECT * FROM game WHERE gameId = :id LIMIT 1")
     Game findByID(String id);
 
-    @Insert
+    @Transaction
+    @Query("SELECT * FROM Game")
+    LiveData<List<GameWithUsers>> getAllGameWithUsers();
+
+    @Transaction
+    @Query("SELECT * FROM Game WHERE gameId = :id")
+    LiveData<GameWithUsers> getAllGameUsers(String id);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Game game);
 
     @Delete

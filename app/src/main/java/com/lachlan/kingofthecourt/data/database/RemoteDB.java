@@ -25,6 +25,7 @@ import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.entity.Location;
 import com.lachlan.kingofthecourt.data.entity.User;
 import com.lachlan.kingofthecourt.data.repository.CourtRepository;
+import com.lachlan.kingofthecourt.data.repository.GameRepository;
 import com.lachlan.kingofthecourt.data.repository.UserRepository;
 import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
 import com.lachlan.kingofthecourt.ui.viewmodel.FinderViewModel;
@@ -111,30 +112,26 @@ public class RemoteDB {
                 });
     }
 
-    public void getGamesList(Court court, CourtViewModel courtViewModel) {
-        ArrayList<Game> games = new ArrayList<>();
-        firebaseFirestore.collection("courts").document(court.getCourtId()).collection("games").get()
+    public void getAllGames(GameRepository gameRepository) {
+        firebaseFirestore.collection("games").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        String id = document.getId();
-                        Timestamp timestamp = (Timestamp) document.getData().get("timestamp");
-                        Date dateTime = timestamp.toDate();
-                        List<String> playerIDs = (List<String>) document.get("players");
-                        ArrayList<User> players = new ArrayList<>();
-                        for (String playerID : playerIDs) {
-                            User player = new User(playerID);
-                            players.add(player);
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String id = document.getId();
+                                String creatorId = document.getData().get("creatorId").toString();
+                                Timestamp timestamp = (Timestamp) document.getData().get("dateTime");
+                                Date dateTime = timestamp.toDate();
+                                String courtId = document.getData().get("courtId").toString();
+
+                                gameRepository.insertGame(new Game(id, creatorId, dateTime, courtId));
+                            }
+                        } else {
+                            Log.d("FAIL", "Error getting documents: ", task.getException());
                         }
-                        User creator = new User(document.getData().get("creator").toString());
-                        games.add(new Game(id, creator, dateTime, players));
                     }
-                    courtViewModel.onGamesListRetrieved(games);
-                }
-            }
-        });
+                });
     }
 
     public void joinGame(Court court, Game game) {

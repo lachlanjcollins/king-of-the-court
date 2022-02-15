@@ -6,9 +6,12 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.lachlan.kingofthecourt.data.entity.User;
+import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
+import com.lachlan.kingofthecourt.data.relation.UserWithGames;
 
 import java.util.List;
 
@@ -20,6 +23,10 @@ public interface UserDAO {
 
     @Query("SELECT * FROM user WHERE userId = :id LIMIT 1")
     LiveData<User> findByID(String id);
+
+    @Transaction
+    @Query("SELECT * FROM User")
+    LiveData<List<UserWithGames>> getAllUserWithGames();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);

@@ -26,7 +26,7 @@ import java.util.concurrent.Executors;
                 Game.class,
                 UserGameCrossRef.class
         },
-        version = 1)
+        version = 2)
 
 @TypeConverters({Converters.class})
 

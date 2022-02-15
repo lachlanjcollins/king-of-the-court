@@ -101,10 +101,10 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
+                // Determine which court marker has been selected and instantiate the object
                 Court court = finderViewModel.getCourtsList().getValue().get((int) marker.getTag());
 
                 NavDirections nav = FinderFragmentDirections.actionNavigationFinderToNavigationCourt(court);
-
                 navController.navigate(nav);
                 return false;
             }
@@ -133,7 +133,6 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
-
 
     }
 

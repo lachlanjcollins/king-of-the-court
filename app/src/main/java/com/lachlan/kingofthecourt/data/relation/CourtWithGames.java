@@ -12,7 +12,7 @@ public class CourtWithGames {
     @Embedded public Court court;
     @Relation(
        parentColumn = "courtId",
-       entityColumn = "courtId"
+       entityColumn = "locationId"
     )
     public List<Game> games;
 }

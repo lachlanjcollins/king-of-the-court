@@ -19,45 +19,23 @@ public class Game implements Parcelable {
     private String gameId;
 
     private String creatorId;
-//    private User creator;
 
     private Date dateTime;
 
-    private String courtId;
-
-//    private ArrayList<User> players; @TODO: Fix later
+    private String locationId;
 
     public Game() {
         gameId = "";
         creatorId = "";
-//        creator = new User();
         dateTime = new Date();
-//        players = new ArrayList<>();
+        locationId = "";
     }
 
-    public Game(Date dateTime) {
-        creatorId = "";
-        this.dateTime = dateTime;
-//        players = new ArrayList<>();
-    }
-
-    public Game(User creator, Date dateTime) {
-        this.creatorId = creator.getUserId();
-        this.dateTime = dateTime;
-//        players = new ArrayList<>();
-    }
-
-    public Game(User creator, Date dateTime, ArrayList<User> players) {
-        this.creatorId = creator.getUserId();
-        this.dateTime = dateTime;
-//        this.players = players;
-    }
-
-    public Game(String gameId, User creator, Date dateTime, ArrayList<User> players) {
+    public Game(String gameId, String creatorId, Date dateTime, String locationId) {
         this.gameId = gameId;
-        this.creatorId = creator.getUserId();
+        this.creatorId = creatorId;
         this.dateTime = dateTime;
-//        this.players = players;
+        this.locationId = locationId;
     }
 
     protected Game(Parcel in) {
@@ -75,15 +53,6 @@ public class Game implements Parcelable {
         }
     };
 
-//    public User getCreator() {
-//        return creator;
-//    }
-//
-//    public void setCreator(User creator) {
-//        this.creator = creator;
-//    }
-
-
     public String getCreatorId() {
         return creatorId;
     }
@@ -100,21 +69,12 @@ public class Game implements Parcelable {
         this.dateTime = time;
     }
 
-//    public ArrayList<User> getPlayers() {
-//        return players;
-//    }
-
-//    public void setPlayers(ArrayList<User> players) {
-//        this.players = players;
-//    }
-
-
-    public String getCourtId() {
-        return courtId;
+    public String getLocationId() {
+        return locationId;
     }
 
-    public void setCourtId(String courtId) {
-        this.courtId = courtId;
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
     }
 
     public String getGameId() {

@@ -24,25 +24,16 @@ public class Court implements Parcelable {
     @Embedded
     private Location location;
 
-//    private ArrayList<Game> gamesList; @TODO: Fix this
-
     public Court() {
         courtId = "";
         locationName = "";
         location = new Location(0, 0);
-//        gamesList = new ArrayList<>();
     }
 
     public Court(@NonNull String courtId, String locationName, Location location) {
         this.courtId = courtId;
         this.locationName = locationName;
         this.location = location;
-    }
-
-    public Court(@NonNull String courtId, String locationName, LatLng latLng, ArrayList<Game> gamesList) {
-        this.locationName = locationName;
-        this.location = new Location(latLng.latitude, latLng.longitude);
-//        this.gamesList = gamesList;
     }
 
     protected Court(Parcel in) {

@@ -1,6 +1,7 @@
 package com.lachlan.kingofthecourt.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lachlan.kingofthecourt.activities.MainActivity;
+import com.lachlan.kingofthecourt.data.entity.Game;
+import com.lachlan.kingofthecourt.data.relation.CourtWithGames;
 import com.lachlan.kingofthecourt.databinding.FragmentCourtBinding;
 import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.ui.adapters.CourtRecyclerAdapter;
 import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
+import com.lachlan.kingofthecourt.ui.viewmodel.SharedViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CourtFragment extends Fragment {
     private FragmentCourtBinding binding;
@@ -30,23 +37,28 @@ public class CourtFragment extends Fragment {
         binding = FragmentCourtBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        Court court = CourtFragmentArgs.fromBundle(getArguments()).getCourt();
-        ((MainActivity) getActivity()).setActionBarTitle(court.getLocationName() + " Games");
+        courtViewModel = ViewModelProvider
+                .AndroidViewModelFactory
+                .getInstance(getActivity().getApplication())
+                .create(CourtViewModel.class);
 
-        courtViewModel =
-                new ViewModelProvider(this).get(CourtViewModel.class);
-        courtViewModel.setCourt(court);
-        courtViewModel.initGamesList();
+        courtViewModel.setCurrentCourt(CourtFragmentArgs.fromBundle(getArguments()).getCourt().getCourtId());
 
-        courtViewModel.getListReady().observe(getViewLifecycleOwner(), new Observer<String>() {
+        courtViewModel.getCurrentCourt().observe(getViewLifecycleOwner(), new Observer<Court>() {
             @Override
-            public void onChanged(String s) {
-                RecyclerView recyclerView = binding.recyclerCourt;
-                adapter = new CourtRecyclerAdapter(courtViewModel.getGamesList(), court);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(adapter);
+            public void onChanged(Court court) {
+                ((MainActivity) getActivity()).setActionBarTitle(court.getLocationName() + " Games");
+                courtViewModel.getGamesAtCourt().observe(getViewLifecycleOwner(), new Observer<CourtWithGames>() {
+                    @Override
+                    public void onChanged(CourtWithGames courtWithGames) {
+                        RecyclerView recyclerView = binding.recyclerCourt;
+                        adapter = new CourtRecyclerAdapter(courtWithGames.games, courtViewModel.getCurrentCourt());
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(adapter);
+                    }
+                });
             }
         });
 

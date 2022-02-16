@@ -31,10 +31,12 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonViewGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VIEW GAME"
+        android:layout_width="115dp"
+        android:layout_height="46dp"
         android:background="@drawable/bg_button"
+        android:text="VIEW GAME"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

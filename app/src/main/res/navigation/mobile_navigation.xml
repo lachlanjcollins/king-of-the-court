@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.lachlan.kingofthecourt.ui.home.HomeFragment"
+        android:name="com.lachlan.kingofthecourt.fragments.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_leaderboards"
-        android:name="com.lachlan.kingofthecourt.ui.leaderboards.LeaderboardsFragment"
+        android:name="com.lachlan.kingofthecourt.fragments.LeaderboardsFragment"
         android:label="@string/title_leaderboards"
         tools:layout="@layout/fragment_leaderboards" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.lachlan.kingofthecourt.ui.profile.ProfileFragment"
+        android:name="com.lachlan.kingofthecourt.fragments.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/navigation_edit_profile"
-        android:name="com.lachlan.kingofthecourt.ui.profile.EditProfileFragment"
+        android:name="com.lachlan.kingofthecourt.fragments.EditProfileFragment"
         android:label="@string/title_edit_profile"
         tools:layout="@layout/fragment_edit_profile" >
         <action
@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/navigation_finder"
-        android:name="com.lachlan.kingofthecourt.ui.finder.FinderFragment"
+        android:name="com.lachlan.kingofthecourt.fragments.FinderFragment"
         android:label="@string/title_finder"
         tools:layout="@layout/fragment_finder" >
         <action
@@ -50,24 +50,24 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_court"
-        android:name="com.lachlan.kingofthecourt.ui.finder.CourtFragment"
+        android:name="com.lachlan.kingofthecourt.fragments.CourtFragment"
         tools:layout="@layout/fragment_court">
         <argument
             android:name="court"
-            app:argType="com.lachlan.kingofthecourt.model.Court" />
+            app:argType="com.lachlan.kingofthecourt.data.entity.Court" />
         <action
             android:id="@+id/action_navigation_court_to_navigation_game"
             app:destination="@id/navigation_game" />
     </fragment>
     <fragment
         android:id="@+id/navigation_game"
-        android:name="com.lachlan.kingofthecourt.ui.game.GameFragment"
+        android:name="com.lachlan.kingofthecourt.fragments.GameFragment"
         tools:layout="@layout/fragment_game">
         <argument
             android:name="game"
-            app:argType="com.lachlan.kingofthecourt.model.Game" />
+            app:argType="com.lachlan.kingofthecourt.data.entity.Game" />
         <argument
             android:name="court"
-            app:argType="com.lachlan.kingofthecourt.model.Court" />
+            app:argType="com.lachlan.kingofthecourt.data.entity.Court" />
     </fragment>
 </navigation>

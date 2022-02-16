@@ -117,6 +117,7 @@ public class RemoteDB {
     }
 
     public void getAllGames(GameRepository gameRepository) {
+        gameRepository.deleteAll();
         firebaseFirestore.collection("games").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

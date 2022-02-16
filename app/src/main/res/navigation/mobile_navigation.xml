@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.lachlan.kingofthecourt.fragments.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_game"
+            app:destination="@id/navigation_game" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_leaderboards"
@@ -70,8 +74,8 @@
             android:name="game"
             app:argType="com.lachlan.kingofthecourt.data.entity.Game" />
         <argument
-            android:name="court"
-            app:argType="com.lachlan.kingofthecourt.data.entity.Court" />
+            android:name="courtId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/navigation_create_game"

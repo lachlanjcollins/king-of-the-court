@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel;
 
 public class LeaderboardsViewModel extends ViewModel {
 
-    // @TODO: Confirm use of this class.
-
     private MutableLiveData<String> mText;
 
     public LeaderboardsViewModel() {

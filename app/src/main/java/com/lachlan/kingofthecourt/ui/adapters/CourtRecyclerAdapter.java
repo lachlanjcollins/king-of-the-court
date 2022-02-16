@@ -13,8 +13,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lachlan.kingofthecourt.data.repository.GameRepository;
-import com.lachlan.kingofthecourt.data.repository.UserRepository;
+
 import com.lachlan.kingofthecourt.databinding.RecyclerCourtBinding;
 import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.entity.Game;
@@ -22,7 +21,6 @@ import com.lachlan.kingofthecourt.fragments.CourtFragmentDirections;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -69,7 +67,7 @@ public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdap
             @Override
             public void onClick(View view) {
                 NavController navController = Navigation.findNavController(view);
-                NavDirections nav = CourtFragmentDirections.actionNavigationCourtToNavigationGame(selectedGame, court.getValue());
+                NavDirections nav = CourtFragmentDirections.actionNavigationCourtToNavigationGame(selectedGame, selectedGame.getLocationId());
                 navController.navigate(nav);
             }
         });

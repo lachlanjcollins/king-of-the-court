@@ -14,12 +14,16 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lachlan.kingofthecourt.data.repository.GameRepository;
+import com.lachlan.kingofthecourt.data.repository.UserRepository;
 import com.lachlan.kingofthecourt.databinding.RecyclerCourtBinding;
 import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.fragments.CourtFragmentDirections;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdapter.ViewHolder> {
@@ -32,8 +36,8 @@ public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textName;
-        private TextView textPlayers;
+        private TextView textDate;
+        private TextView textTime;
         private AppCompatButton buttonViewGame;
         private RecyclerCourtBinding binding;
 
@@ -41,8 +45,8 @@ public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdap
             super(binding.getRoot());
             this.binding = binding;
             buttonViewGame = binding.buttonViewGame;
-            textName = binding.textName;
-            textPlayers = binding.textPlayers;
+            textDate = binding.textGameDate;
+            textTime = binding.textGameTime;
         }
     }
 
@@ -59,8 +63,8 @@ public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull CourtRecyclerAdapter.ViewHolder holder, int position) {
         Game selectedGame = gamesList.get(position);
-        holder.textName.setText(selectedGame.getCreatorId()); //@TODO: Placeholders
-        holder.textPlayers.setText(selectedGame.getDateTime().toString());
+        holder.textDate.setText(getFormattedDate(selectedGame));
+        holder.textTime.setText(getFormattedTime(selectedGame));
         holder.buttonViewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,5 +78,18 @@ public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdap
     @Override
     public int getItemCount() {
         return gamesList.size();
+    }
+
+    public String getFormattedDate(Game game) {
+        DateFormat day = new SimpleDateFormat("EE");
+        DateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateTime = game.getDateTime();
+        return day.format(dateTime) + " " + date.format(dateTime);
+    }
+
+    public String getFormattedTime(Game game) {
+        DateFormat time = new SimpleDateFormat("hh:mm:ss a");
+        Date dateTime = game.getDateTime();
+        return time.format(dateTime);
     }
 }

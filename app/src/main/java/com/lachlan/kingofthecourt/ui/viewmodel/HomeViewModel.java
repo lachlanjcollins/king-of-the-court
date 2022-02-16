@@ -26,7 +26,6 @@ public class HomeViewModel extends AndroidViewModel {
         mText.setValue("This is home fragment");
         userRepository = new UserRepository(application);
         gameRepository = new GameRepository(application);
-        gameRepository.getAllGames(); //@TODO: Check this works
         userWithGames = userRepository.getAllUserGames(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 

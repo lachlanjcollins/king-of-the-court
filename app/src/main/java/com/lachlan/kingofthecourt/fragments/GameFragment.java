@@ -49,8 +49,8 @@ public class GameFragment extends Fragment {
             @Override
             public void onChanged(Game game) {
                 binding.textLocationName.setText(court.getLocationName());
-                binding.textDate.setText(gameViewModel.getFormattedDate());
-                binding.textTime.setText(gameViewModel.getFormattedTime());
+                binding.textDate.setText(gameViewModel.getFormattedDate(game));
+                binding.textTime.setText(gameViewModel.getFormattedTime(game));
             }
         });
 
@@ -58,7 +58,7 @@ public class GameFragment extends Fragment {
             @Override
             public void onChanged(GameWithUsers gameWithUsers) {
                 if (gameWithUsers.users != null && gameViewModel.getCurrentGame() != null) {
-                    gameViewModel.setIsCreator();
+                    gameViewModel.setIsCreator(game);
                     gameViewModel.setInGame(gameWithUsers.users);
                     gameViewModel.setNumPlayers(gameWithUsers.users.size());
                     if (gameViewModel.getIsCreator()) {

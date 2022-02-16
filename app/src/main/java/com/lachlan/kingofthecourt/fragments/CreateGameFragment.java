@@ -8,6 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.lachlan.kingofthecourt.R;
 import com.lachlan.kingofthecourt.activities.MainActivity;
@@ -70,6 +74,10 @@ public class CreateGameFragment extends Fragment implements TimePickerDialog.OnT
                 if (binding.editDate.getText().toString() != "" && binding.editTime.getText().toString() != "") {
                     createGameViewModel.setDateTime(year, month, day, hour, minute);
                     createGameViewModel.createGame(court);
+                    Toast.makeText(getContext(), "Game Created", Toast.LENGTH_SHORT).show();
+                    NavController navController = NavHostFragment.findNavController(getParentFragment());
+                    NavDirections nav = CreateGameFragmentDirections.actionNavigationCreateGameToNavigationHome();
+                    navController.navigate(nav);
                 }
             }
         });

@@ -33,7 +33,7 @@ public class GameRepository {
     }
 
     public LiveData<Game> getGameById(String gameId) {
-        remoteDB.getAllGames(this);
+//        remoteDB.getAllGames(this);
         return gameDAO.findByID(gameId);
     }
 

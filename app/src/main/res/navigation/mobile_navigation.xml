@@ -81,5 +81,8 @@
         <argument
             android:name="court"
             app:argType="com.lachlan.kingofthecourt.data.entity.Court" />
+        <action
+            android:id="@+id/action_navigation_create_game_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 </navigation>

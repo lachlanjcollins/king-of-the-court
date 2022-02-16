@@ -122,16 +122,16 @@ public class GameViewModel extends AndroidViewModel {
         this.numPlayers.setValue(numPlayers);
     }
 
-    public String getFormattedDate() {
+    public String getFormattedDate(Game game) {
         DateFormat day = new SimpleDateFormat("EE");
         DateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-        Date dateTime = currentGame.getValue().getDateTime();
+        Date dateTime = game.getDateTime();
         return day.format(dateTime) + " " + date.format(dateTime);
     }
 
-    public String getFormattedTime() {
+    public String getFormattedTime(Game game) {
         DateFormat time = new SimpleDateFormat("hh:mm:ss a"); //@TODO: Figure out timezones
-        Date dateTime = currentGame.getValue().getDateTime();
+        Date dateTime = game.getDateTime();
         return time.format(dateTime);
     }
 

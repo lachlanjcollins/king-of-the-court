@@ -93,8 +93,8 @@ public class GameViewModel extends AndroidViewModel {
         return isCreator;
     }
 
-    public void setIsCreator() {
-        if (remoteDB.getCurrentUserID().equals(currentGame.getValue().getCreatorId())) {
+    public void setIsCreator(Game game) {
+        if (remoteDB.getCurrentUserID().equals(game.getCreatorId())) {
             isCreator = true;
         } else {
             isCreator = false;

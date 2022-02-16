@@ -20,4 +20,9 @@
     <style name="Custom.ActionBar" parent="Widget.MaterialComponents.Light.ActionBar.Solid">
         <item name="background">@color/orange</item>
     </style>
+
+    <style name="MyDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="android:textColor">@color/orange</item>
+        <item name="colorAccent">@color/orange</item>
+    </style>
 </resources>

@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,7 +45,9 @@ public class CourtFragment extends Fragment {
                 .getInstance(getActivity().getApplication())
                 .create(CourtViewModel.class);
 
-        courtViewModel.setCurrentCourt(CourtFragmentArgs.fromBundle(getArguments()).getCourt().getCourtId());
+        Court court = CourtFragmentArgs.fromBundle(getArguments()).getCourt();
+
+        courtViewModel.setCurrentCourt(court.getCourtId());
 
         courtViewModel.getCurrentCourt().observe(getViewLifecycleOwner(), new Observer<Court>() {
             @Override
@@ -59,6 +64,15 @@ public class CourtFragment extends Fragment {
                         recyclerView.setAdapter(adapter);
                     }
                 });
+            }
+        });
+
+        binding.buttonCreateGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController navController = NavHostFragment.findNavController(getParentFragment());
+                NavDirections nav = CourtFragmentDirections.actionNavigationCourtToCreateGameFragment(court);
+                navController.navigate(nav);
             }
         });
 

@@ -58,6 +58,9 @@
         <action
             android:id="@+id/action_navigation_court_to_navigation_game"
             app:destination="@id/navigation_game" />
+        <action
+            android:id="@+id/action_navigation_court_to_createGameFragment"
+            app:destination="@id/navigation_create_game" />
     </fragment>
     <fragment
         android:id="@+id/navigation_game"
@@ -66,6 +69,15 @@
         <argument
             android:name="game"
             app:argType="com.lachlan.kingofthecourt.data.entity.Game" />
+        <argument
+            android:name="court"
+            app:argType="com.lachlan.kingofthecourt.data.entity.Court" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_create_game"
+        android:name="com.lachlan.kingofthecourt.fragments.CreateGameFragment"
+        android:label="fragment_create_game"
+        tools:layout="@layout/fragment_create_game" >
         <argument
             android:name="court"
             app:argType="com.lachlan.kingofthecourt.data.entity.Court" />

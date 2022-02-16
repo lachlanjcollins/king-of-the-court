@@ -10,6 +10,7 @@ import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
 
+import java.util.Date;
 import java.util.List;
 
 public class GameRepository {
@@ -39,6 +40,10 @@ public class GameRepository {
     public LiveData<GameWithUsers> getAllGameUsers(String gameId) {
         remoteDB.getAllGameUsers(gameId, userRepository);
         return gameDAO.getAllGameUsers(gameId);
+    }
+
+    public void createNewGame(String courtId, String creatorId, Date dateTime) {
+        remoteDB.createNewGame(courtId, creatorId, dateTime, this);
     }
 
     public void insertGame(final Game game){

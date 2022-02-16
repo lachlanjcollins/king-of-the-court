@@ -55,6 +55,16 @@ public class UserRepository {
         });
     }
 
+    public void deleteUserGameRef(final String userId, final String gameId) {
+        LocalDB.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                remoteDB.leaveGame(userId, gameId);
+                userGameRefDAO.delete(new UserGameCrossRef(userId, gameId));
+            }
+        });
+    }
+
     public void deleteAll(){
         LocalDB.databaseWriteExecutor.execute(new Runnable() {
             @Override

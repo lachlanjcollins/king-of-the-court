@@ -58,7 +58,10 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public void leaveGame() {
-//        game.getPlayers().removeIf(user -> user.getUserId().equals(db.getCurrentUserID()));
+        userRepository.deleteUserGameRef(remoteDB.getCurrentUserID(), currentGame.getValue().getGameId());
+        gameWithUsers = gameRepository.getAllGameUsers(currentGame.getValue().getGameId());
+        inGame.setValue(false);
+        updateIsGameFull();
     }
 
     public void setCurrentGame(String gameId) {

@@ -102,11 +102,20 @@ public class GameFragment extends Fragment {
         binding.buttonJoinGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                gameViewModel.setInGame();
                 gameViewModel.joinGame();
                 Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
                 binding.buttonJoinGame.setClickable(false);
                 binding.buttonJoinGame.setBackgroundResource(R.drawable.bg_button_grey);
+            }
+        });
+
+        binding.buttonLeaveGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameViewModel.leaveGame();
+                binding.buttonLeaveGame.setVisibility(View.INVISIBLE);
+                binding.buttonJoinGame.setClickable(true);
+                binding.buttonJoinGame.setBackgroundResource(R.drawable.bg_button);
             }
         });
 

@@ -165,6 +165,12 @@ public class RemoteDB {
                 .update("players", FieldValue.arrayUnion(userId));
     }
 
+    public void leaveGame(String userId, String gameId) {
+        firebaseFirestore.collection("games")
+                .document(gameId)
+                .update("players", FieldValue.arrayRemove(userId));
+    }
+
     public Location convertGeoToLocation(GeoPoint geoPoint) {
         double lat = geoPoint.getLatitude();
         double lon = geoPoint.getLongitude();

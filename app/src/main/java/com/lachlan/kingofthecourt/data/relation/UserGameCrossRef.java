@@ -11,4 +11,9 @@ public class UserGameCrossRef {
 
     @NonNull
     public String gameId;
+
+    public UserGameCrossRef(String userId, String gameId) {
+        this.userId = userId;
+        this.gameId = gameId;
+    }
 }

@@ -10,6 +10,7 @@ import androidx.room.TypeConverters;
 import com.lachlan.kingofthecourt.data.dao.CourtDAO;
 import com.lachlan.kingofthecourt.data.dao.GameDAO;
 import com.lachlan.kingofthecourt.data.dao.UserDAO;
+import com.lachlan.kingofthecourt.data.dao.UserGameRefDAO;
 import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.entity.User;
@@ -34,6 +35,7 @@ public abstract class LocalDB extends RoomDatabase {
     public abstract CourtDAO courtDAO();
     public abstract GameDAO gameDAO();
     public abstract UserDAO userDAO();
+    public abstract UserGameRefDAO userGameRefDAO();
 
     private static LocalDB INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;

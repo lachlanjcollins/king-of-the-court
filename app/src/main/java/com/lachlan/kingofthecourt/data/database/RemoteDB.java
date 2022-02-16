@@ -24,6 +24,7 @@ import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.entity.Location;
 import com.lachlan.kingofthecourt.data.entity.User;
+import com.lachlan.kingofthecourt.data.relation.UserGameCrossRef;
 import com.lachlan.kingofthecourt.data.repository.CourtRepository;
 import com.lachlan.kingofthecourt.data.repository.GameRepository;
 import com.lachlan.kingofthecourt.data.repository.UserRepository;
@@ -75,7 +76,6 @@ public class RemoteDB {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
-                Log.e("TAG", "The current user is: " + user.getUserId());
                 userRepository.insertUser(user);
             }
         });
@@ -134,17 +134,35 @@ public class RemoteDB {
                 });
     }
 
-    public void joinGame(Court court, Game game) {
-        firebaseFirestore.collection("courts")
-                .document(court.getCourtId()).collection("games")
-                .document(game.getGameId()).update("players", FieldValue.arrayUnion(getCurrentUserID()));
+    public void getAllGameUsers(String gameId, UserRepository userRepository) {
+        userRepository.deleteAllUserRefsForGame(gameId);
+        firebaseFirestore.collection("games")
+                .document(gameId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnap) {
+                        List<String> players = (List<String>) documentSnap.get("players");
+                        Log.e("TAG", "There are this many players in the document: " + players.size());
+                        for (String playerId : players) {
+                            firebaseFirestore.collection("users").document(playerId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    User user = documentSnapshot.toObject(User.class);
+                                    Log.e("REMOTE TAG", user.getUserId());
+                                    userRepository.insertUser(user);
+                                    userRepository.insertUserGameRef(user.getUserId(), gameId);
+                                }
+                            });
+                        }
+                    }
+                });
     }
 
-    public LatLng convertGeo(GeoPoint geoPoint) {
-        double lat = geoPoint.getLatitude();
-        double lon = geoPoint.getLongitude();
-        LatLng latLng = new LatLng(lat, lon);
-        return latLng;
+    public void joinGame(String userId, String gameId) {
+        firebaseFirestore.collection("games")
+                .document(gameId)
+                .update("players", FieldValue.arrayUnion(userId));
     }
 
     public Location convertGeoToLocation(GeoPoint geoPoint) {

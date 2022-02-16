@@ -10,7 +10,6 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.lachlan.kingofthecourt.data.entity.User;
-import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
 import com.lachlan.kingofthecourt.data.relation.UserWithGames;
 
 import java.util.List;

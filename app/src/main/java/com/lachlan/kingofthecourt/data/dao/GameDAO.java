@@ -20,7 +20,7 @@ public interface GameDAO {
     LiveData<List<Game>> getAll();
 
     @Query("SELECT * FROM game WHERE gameId = :id LIMIT 1")
-    Game findByID(String id);
+    LiveData<Game> findByID(String id);
 
     @Transaction
     @Query("SELECT * FROM Game")

@@ -75,8 +75,10 @@ public class GameFragment extends Fragment {
                 gameViewModel.getNumPlayers().observe(getViewLifecycleOwner(), new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
-                        gameViewModel.updateIsGameFull();
-                        binding.textNumPlayers.setText(integer + " / 10");
+                        if (integer != 0) {
+                            gameViewModel.updateIsGameFull();
+                            binding.textNumPlayers.setText(integer + " / 10");
+                        }
                     }
                 });
             }
@@ -124,6 +126,7 @@ public class GameFragment extends Fragment {
                 binding.buttonJoinGame.setBackgroundResource(R.drawable.bg_button);
             }
         });
+
 
         return view;
     }

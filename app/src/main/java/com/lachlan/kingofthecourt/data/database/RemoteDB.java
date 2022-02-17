@@ -116,7 +116,7 @@ public class RemoteDB {
                 });
     }
 
-    public void getAllGames(GameRepository gameRepository) {
+    public void getAllGames(GameRepository gameRepository, UserRepository userRepository) {
         gameRepository.deleteAll();
         firebaseFirestore.collection("games").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -124,13 +124,26 @@ public class RemoteDB {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                String id = document.getId();
+                                String gameId = document.getId();
                                 String creatorId = document.getData().get("creatorId").toString();
                                 Timestamp timestamp = (Timestamp) document.getData().get("dateTime");
                                 Date dateTime = timestamp.toDate();
                                 String courtId = document.getData().get("courtId").toString();
 
-                                gameRepository.insertGame(new Game(id, creatorId, dateTime, courtId));
+                                gameRepository.insertGame(new Game(gameId, creatorId, dateTime, courtId));
+
+                                List<String> players = (List<String>) document.get("players");
+                                for (String playerId : players) {
+                                    firebaseFirestore.collection("users").document(playerId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            User user = documentSnapshot.toObject(User.class);
+                                            Log.e("REMOTE TAG", user.getUserId());
+                                            userRepository.insertUser(user);
+                                            userRepository.insertUserGameRef(user.getUserId(), gameId);
+                                        }
+                                    });
+                                }
                             }
                         } else {
                             Log.d("FAIL", "Error getting documents: ", task.getException());

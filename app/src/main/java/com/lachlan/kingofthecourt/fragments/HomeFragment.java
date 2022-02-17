@@ -15,15 +15,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lachlan.kingofthecourt.data.entity.User;
 import com.lachlan.kingofthecourt.data.relation.UserWithGames;
 import com.lachlan.kingofthecourt.databinding.FragmentHomeBinding;
 import com.lachlan.kingofthecourt.ui.adapters.CourtRecyclerAdapter;
 import com.lachlan.kingofthecourt.ui.adapters.HomeRecyclerAdapter;
+import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
 import com.lachlan.kingofthecourt.ui.viewmodel.HomeViewModel;
+import com.lachlan.kingofthecourt.ui.viewmodel.SharedViewModel;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
+    private SharedViewModel sharedViewModel;
     private FragmentHomeBinding binding;
     private HomeRecyclerAdapter adapter;
 
@@ -31,9 +35,20 @@ public class HomeFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
 
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel = ViewModelProvider
+                .AndroidViewModelFactory
+                .getInstance(getActivity().getApplication())
+                .create(HomeViewModel.class);
+
+        sharedViewModel = ViewModelProvider
+                .AndroidViewModelFactory
+                .getInstance(getActivity().getApplication())
+                .create(SharedViewModel.class);
+
+
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
 
         final TextView textView = binding.textHome;
 
@@ -41,7 +56,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(UserWithGames userWithGames) {
                 RecyclerView recyclerView = binding.recyclerHome;
-                adapter = new HomeRecyclerAdapter(userWithGames.games); //@TODO: May need to pass all the courts in here
+                adapter = new HomeRecyclerAdapter(userWithGames.games);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -49,10 +64,17 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        homeViewModel.getDate().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onChanged(String s) {
+                binding.textTodayDate.setText(s);
+            }
+        });
+
+        sharedViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                textView.setText("Welcome " + user.getFirstName() + ", here's a list of your upcoming games.");
             }
         });
 

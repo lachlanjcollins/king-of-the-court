@@ -32,7 +32,7 @@ public class GameRepository {
     }
 
     public LiveData<List<Game>> getAllGames() {
-        remoteDB.getAllGames(this);
+        remoteDB.getAllGames(this, userRepository);
         return allGames;
     }
 

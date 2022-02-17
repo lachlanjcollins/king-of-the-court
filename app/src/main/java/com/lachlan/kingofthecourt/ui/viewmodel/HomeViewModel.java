@@ -8,30 +8,52 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.lachlan.kingofthecourt.data.entity.Court;
+import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.entity.User;
 import com.lachlan.kingofthecourt.data.relation.UserWithGames;
+import com.lachlan.kingofthecourt.data.repository.CourtRepository;
 import com.lachlan.kingofthecourt.data.repository.GameRepository;
 import com.lachlan.kingofthecourt.data.repository.UserRepository;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.List;
 
 public class HomeViewModel extends AndroidViewModel {
 
     private MutableLiveData<String> mText;
-    private GameRepository gameRepository;
     private UserRepository userRepository;
     private LiveData<UserWithGames> userWithGames;
+    private MutableLiveData<String> date;
 
     public HomeViewModel(Application application) {
         super(application);
         mText = new MutableLiveData<>();
+        date = new MutableLiveData<>();
         mText.setValue("This is home fragment");
         userRepository = new UserRepository(application);
-        gameRepository = new GameRepository(application);
         userWithGames = userRepository.getAllUserGames(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        setDate();
     }
 
     public LiveData<UserWithGames> getUserWithGames() {
         return userWithGames;
     }
+
+    public MutableLiveData<String> getDate() {
+        return date;
+    }
+
+    public void setDate() {
+        LocalDate localDate = LocalDate.now();
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        date.setValue(dateFormat.format(localDate));
+    }
+
 
     public LiveData<String> getText() {
         return mText;

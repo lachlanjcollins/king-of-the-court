@@ -63,17 +63,11 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        binding.recentGamesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         binding.editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.action_navigation_profile_to_navigation_edit_profile);
+                binding.buttonUpdate.setVisibility(View.VISIBLE);
+
             }
         });
 

@@ -1,43 +1,27 @@
 package com.lachlan.kingofthecourt.ui.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
-import android.view.View;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.entity.Game;
-import com.lachlan.kingofthecourt.data.entity.User;
 import com.lachlan.kingofthecourt.data.relation.UserWithGames;
-import com.lachlan.kingofthecourt.data.repository.CourtRepository;
-import com.lachlan.kingofthecourt.data.repository.GameRepository;
 import com.lachlan.kingofthecourt.data.repository.UserRepository;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
 
 public class HomeViewModel extends AndroidViewModel {
 
-    private MutableLiveData<String> mText;
-    private UserRepository userRepository;
-    private LiveData<UserWithGames> userWithGames;
-    private MutableLiveData<String> date;
+    private final MutableLiveData<String> mText;
+    private final UserRepository userRepository;
+    private final LiveData<UserWithGames> userWithGames;
+    private final MutableLiveData<String> date;
 
     public HomeViewModel(Application application) {
         super(application);

@@ -1,7 +1,6 @@
 package com.lachlan.kingofthecourt.data.repository;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -14,10 +13,10 @@ import com.lachlan.kingofthecourt.data.relation.CourtWithGames;
 import java.util.List;
 
 public class CourtRepository {
-    private CourtDAO courtDAO;
-    private LiveData<List<Court>> allCourts;
-    private GameRepository gameRepository;
-    private RemoteDB remoteDB;
+    private final CourtDAO courtDAO;
+    private final LiveData<List<Court>> allCourts;
+    private final GameRepository gameRepository;
+    private final RemoteDB remoteDB;
 
     public CourtRepository(Application application) {
         LocalDB localDB = LocalDB.getInstance(application);
@@ -41,7 +40,7 @@ public class CourtRepository {
         return courtDAO.getGamesAtCourt(courtId);
     }
 
-    public void insertCourt(final Court court){
+    public void insertCourt(final Court court) {
         LocalDB.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -50,7 +49,7 @@ public class CourtRepository {
         });
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         LocalDB.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -59,7 +58,7 @@ public class CourtRepository {
         });
     }
 
-    public void deleteCourt(final Court court){
+    public void deleteCourt(final Court court) {
         LocalDB.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {

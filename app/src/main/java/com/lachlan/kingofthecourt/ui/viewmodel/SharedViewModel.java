@@ -10,9 +10,9 @@ import com.lachlan.kingofthecourt.data.repository.GameRepository;
 import com.lachlan.kingofthecourt.data.repository.UserRepository;
 
 public class SharedViewModel extends AndroidViewModel {
-    private LiveData<User> currentUser;
-    private UserRepository userRepository;
-    private GameRepository gameRepository;
+    private final LiveData<User> currentUser;
+    private final UserRepository userRepository;
+    private final GameRepository gameRepository;
 
     public SharedViewModel(Application application) {
         super(application);

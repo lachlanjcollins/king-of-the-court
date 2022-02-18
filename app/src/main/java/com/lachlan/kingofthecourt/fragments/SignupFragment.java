@@ -1,7 +1,6 @@
 package com.lachlan.kingofthecourt.fragments;
 
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,14 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.lachlan.kingofthecourt.R;
-import com.lachlan.kingofthecourt.activities.NewUserActivity;
-import com.lachlan.kingofthecourt.util.Validation;
-import com.lachlan.kingofthecourt.databinding.FragmentSignupBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.lachlan.kingofthecourt.R;
+import com.lachlan.kingofthecourt.activities.NewUserActivity;
+import com.lachlan.kingofthecourt.databinding.FragmentSignupBinding;
+import com.lachlan.kingofthecourt.util.Validation;
 
 public class SignupFragment extends Fragment {
 

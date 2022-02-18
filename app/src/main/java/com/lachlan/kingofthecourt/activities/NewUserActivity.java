@@ -2,19 +2,18 @@ package com.lachlan.kingofthecourt.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.lachlan.kingofthecourt.data.database.RemoteDB;
-import com.lachlan.kingofthecourt.util.Validation;
-import com.lachlan.kingofthecourt.databinding.ActivityNewUserBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.data.entity.User;
+import com.lachlan.kingofthecourt.databinding.ActivityNewUserBinding;
+import com.lachlan.kingofthecourt.util.Validation;
 
 public class NewUserActivity extends AppCompatActivity {
     private ActivityNewUserBinding binding;
@@ -27,7 +26,7 @@ public class NewUserActivity extends AppCompatActivity {
         binding = ActivityNewUserBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         RemoteDB db = new RemoteDB();
         Validation valid = new Validation();

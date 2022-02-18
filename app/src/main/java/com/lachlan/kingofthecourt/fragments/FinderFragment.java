@@ -37,27 +37,25 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.lachlan.kingofthecourt.databinding.FragmentFinderBinding;
 import com.lachlan.kingofthecourt.data.entity.Court;
+import com.lachlan.kingofthecourt.databinding.FragmentFinderBinding;
 import com.lachlan.kingofthecourt.ui.viewmodel.FinderViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class FinderFragment extends Fragment implements OnMapReadyCallback {
 
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private static final int DEFAULT_ZOOM = 15;
     private FinderViewModel finderViewModel;
     private FragmentFinderBinding binding;
     private GoogleMap mMap;
     private MapView mMpaView;
     private PlacesClient placesClient;
     private boolean locationPermissionGranted;
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location lastKnownLocation;
-    private static final int DEFAULT_ZOOM = 15;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

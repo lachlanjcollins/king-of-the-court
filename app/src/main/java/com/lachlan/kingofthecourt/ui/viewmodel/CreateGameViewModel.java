@@ -13,9 +13,9 @@ import com.lachlan.kingofthecourt.util.Validation;
 import java.util.Date;
 
 public class CreateGameViewModel extends AndroidViewModel {
-    private MutableLiveData<Date> dateTime;
-    private GameRepository gameRepository;
-    private Validation valid;
+    private final MutableLiveData<Date> dateTime;
+    private final GameRepository gameRepository;
+    private final Validation valid;
 
     public CreateGameViewModel(Application application) {
         super(application);
@@ -25,8 +25,8 @@ public class CreateGameViewModel extends AndroidViewModel {
     }
 
     public boolean setDateTime(int year, int month, int day, int hour, int minute) {
-        Date gameDate = new Date(year-1900, month, day, hour, minute);
-        dateTime.setValue(new Date(year-1900, month, day, hour, minute));
+        Date gameDate = new Date(year - 1900, month, day, hour, minute);
+        dateTime.setValue(new Date(year - 1900, month, day, hour, minute));
         return (valid.inFuture(gameDate));
     }
 

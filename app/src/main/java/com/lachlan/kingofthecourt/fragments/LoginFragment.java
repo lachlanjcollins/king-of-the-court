@@ -11,10 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.lachlan.kingofthecourt.activities.MainActivity;
-import com.lachlan.kingofthecourt.activities.NewUserActivity;
-import com.lachlan.kingofthecourt.util.Validation;
-import com.lachlan.kingofthecourt.databinding.FragmentLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -23,6 +19,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.lachlan.kingofthecourt.activities.MainActivity;
+import com.lachlan.kingofthecourt.activities.NewUserActivity;
+import com.lachlan.kingofthecourt.databinding.FragmentLoginBinding;
+import com.lachlan.kingofthecourt.util.Validation;
 
 public class LoginFragment extends Fragment {
 

@@ -1,6 +1,5 @@
 package com.lachlan.kingofthecourt.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.lachlan.kingofthecourt.activities.MainActivity;
 import com.lachlan.kingofthecourt.R;
+import com.lachlan.kingofthecourt.activities.MainActivity;
+import com.lachlan.kingofthecourt.data.entity.Court;
+import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.entity.User;
 import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
 import com.lachlan.kingofthecourt.databinding.FragmentGameBinding;
-import com.lachlan.kingofthecourt.data.entity.Court;
-import com.lachlan.kingofthecourt.data.entity.Game;
-import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
 import com.lachlan.kingofthecourt.ui.viewmodel.GameViewModel;
 
 public class GameFragment extends Fragment {
@@ -41,7 +39,7 @@ public class GameFragment extends Fragment {
                 .AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())
                 .create(GameViewModel.class);
-        
+
         gameViewModel.setCurrentGame(game.getGameId());
         gameViewModel.setCourt(courtId);
 

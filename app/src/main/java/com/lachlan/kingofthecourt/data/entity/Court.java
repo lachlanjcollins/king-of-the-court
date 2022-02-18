@@ -8,19 +8,24 @@ import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.google.android.gms.maps.model.LatLng;
-
-import java.util.ArrayList;
-
 @Entity
 public class Court implements Parcelable {
 
+    public static final Creator<Court> CREATOR = new Creator<Court>() {
+        @Override
+        public Court createFromParcel(Parcel in) {
+            return new Court(in);
+        }
+
+        @Override
+        public Court[] newArray(int size) {
+            return new Court[size];
+        }
+    };
     @PrimaryKey
     @NonNull
     private String courtId;
-
     private String locationName;
-
     @Embedded
     private Location location;
 
@@ -40,18 +45,6 @@ public class Court implements Parcelable {
         courtId = in.readString();
         locationName = in.readString();
     }
-
-    public static final Creator<Court> CREATOR = new Creator<Court>() {
-        @Override
-        public Court createFromParcel(Parcel in) {
-            return new Court(in);
-        }
-
-        @Override
-        public Court[] newArray(int size) {
-            return new Court[size];
-        }
-    };
 
     public String getCourtId() {
         return courtId;

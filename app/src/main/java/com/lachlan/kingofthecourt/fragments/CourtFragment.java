@@ -1,8 +1,6 @@
 package com.lachlan.kingofthecourt.fragments;
 
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lachlan.kingofthecourt.activities.MainActivity;
-import com.lachlan.kingofthecourt.data.entity.Game;
+import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.relation.CourtWithGames;
 import com.lachlan.kingofthecourt.databinding.FragmentCourtBinding;
-import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.ui.adapters.CourtRecyclerAdapter;
 import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
-import com.lachlan.kingofthecourt.ui.viewmodel.SharedViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CourtFragment extends Fragment {
     private FragmentCourtBinding binding;

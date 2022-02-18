@@ -8,20 +8,27 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
 public class Game implements Parcelable {
 
+    public static final Creator<Game> CREATOR = new Creator<Game>() {
+        @Override
+        public Game createFromParcel(Parcel in) {
+            return new Game(in);
+        }
+
+        @Override
+        public Game[] newArray(int size) {
+            return new Game[size];
+        }
+    };
     @PrimaryKey
     @NonNull
     private String gameId;
-
     private String creatorId;
-
     private Date dateTime;
-
     private String locationId;
 
     public Game() {
@@ -40,18 +47,6 @@ public class Game implements Parcelable {
 
     protected Game(Parcel in) {
     }
-
-    public static final Creator<Game> CREATOR = new Creator<Game>() {
-        @Override
-        public Game createFromParcel(Parcel in) {
-            return new Game(in);
-        }
-
-        @Override
-        public Game[] newArray(int size) {
-            return new Game[size];
-        }
-    };
 
     public String getCreatorId() {
         return creatorId;

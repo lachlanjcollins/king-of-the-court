@@ -3,7 +3,7 @@ package com.lachlan.kingofthecourt.data.entity;
 import java.util.ArrayList;
 
 public class Team {
-    private ArrayList<User> players;
+    private final ArrayList<User> players;
     private int score;
 
     public Team() {

@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.data.entity.Court;
@@ -22,20 +21,18 @@ import java.util.Date;
 import java.util.List;
 
 public class GameViewModel extends AndroidViewModel {
+    private final RemoteDB remoteDB;
+    private final MutableLiveData<Integer> numPlayers;
+    private final MutableLiveData<Boolean> isGameFull;
+    private final MutableLiveData<Boolean> inGame;
+    private final MutableLiveData<User> creator;
+    private final GameRepository gameRepository;
+    private final UserRepository userRepository;
+    private final CourtRepository courtRepository;
     private LiveData<Court> court;
     private LiveData<Game> currentGame;
     private LiveData<GameWithUsers> gameWithUsers;
-
-    private RemoteDB remoteDB;
     private boolean isCreator;
-    private MutableLiveData<Integer> numPlayers;
-    private MutableLiveData<Boolean> isGameFull;
-    private MutableLiveData<Boolean> inGame;
-    private MutableLiveData<User> creator;
-
-    private GameRepository gameRepository;
-    private UserRepository userRepository;
-    private CourtRepository courtRepository;
 
     public GameViewModel(Application application) {
         super(application);
@@ -69,17 +66,13 @@ public class GameViewModel extends AndroidViewModel {
         updateIsGameFull();
     }
 
+    public LiveData<Game> getCurrentGame() {
+        return currentGame;
+    }
+
     public void setCurrentGame(String gameId) {
         currentGame = gameRepository.getGameById(gameId);
         gameWithUsers = gameRepository.getAllGameUsers(gameId);
-    }
-
-    public void setCourt(String courtId) {
-        this.court = courtRepository.getCourtById(courtId);
-    }
-
-    public LiveData<Game> getCurrentGame() {
-        return currentGame;
     }
 
     public LiveData<GameWithUsers> getGameWithUsers() {
@@ -90,8 +83,16 @@ public class GameViewModel extends AndroidViewModel {
         return court;
     }
 
+    public void setCourt(String courtId) {
+        this.court = courtRepository.getCourtById(courtId);
+    }
+
     public MutableLiveData<Integer> getNumPlayers() {
         return numPlayers;
+    }
+
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers.setValue(numPlayers);
     }
 
     public boolean getIsCreator() {
@@ -99,20 +100,7 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public void setIsCreator(Game game) {
-        if (remoteDB.getCurrentUserID().equals(game.getCreatorId())) {
-            isCreator = true;
-        } else {
-            isCreator = false;
-        }
-    }
-
-    public void setInGame(List<User> users) {
-        for (User player : users) {
-            if (player.getUserId().equals(remoteDB.getCurrentUserID()))
-                inGame.setValue(true);
-            else
-                inGame.setValue(false);
-        }
+        isCreator = remoteDB.getCurrentUserID().equals(game.getCreatorId());
     }
 
     public void setCreator() {
@@ -137,8 +125,13 @@ public class GameViewModel extends AndroidViewModel {
         return inGame;
     }
 
-    public void setNumPlayers(int numPlayers) {
-        this.numPlayers.setValue(numPlayers);
+    public void setInGame(List<User> users) {
+        for (User player : users) {
+            if (player.getUserId().equals(remoteDB.getCurrentUserID()))
+                inGame.setValue(true);
+            else
+                inGame.setValue(false);
+        }
     }
 
     public String getFormattedDate(Game game) {

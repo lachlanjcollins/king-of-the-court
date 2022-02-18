@@ -1,6 +1,7 @@
 package com.lachlan.kingofthecourt.data.database;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,8 +36,8 @@ import java.util.List;
 import java.util.Map;
 
 public class RemoteDB {
-    private FirebaseFirestore firebaseFirestore;
-    private Validation valid;
+    private final FirebaseFirestore firebaseFirestore;
+    private final Validation valid;
 
     public RemoteDB() {
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -56,7 +57,7 @@ public class RemoteDB {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                       Log.e("FAIL", "Failed to add information to database.");
+                        Log.e("FAIL", "Failed to add information to database.");
                     }
                 });
     }
@@ -70,15 +71,15 @@ public class RemoteDB {
         return currentUserID;
     }
 
-        public void getCurrentUser(UserRepository userRepository) {
+    public void getCurrentUser(UserRepository userRepository) {
         firebaseFirestore.collection("users").document(getCurrentUserID()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
-                userRepository.insertUser(user);
-            }
-        });
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        User user = documentSnapshot.toObject(User.class);
+                        userRepository.insertUser(user);
+                    }
+                });
     }
 
     public void updateUser(User user) {

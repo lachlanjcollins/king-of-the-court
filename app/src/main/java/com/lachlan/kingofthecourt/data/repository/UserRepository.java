@@ -1,31 +1,25 @@
 package com.lachlan.kingofthecourt.data.repository;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.lachlan.kingofthecourt.data.dao.UserDAO;
 import com.lachlan.kingofthecourt.data.dao.UserGameRefDAO;
 import com.lachlan.kingofthecourt.data.database.LocalDB;
 import com.lachlan.kingofthecourt.data.database.RemoteDB;
-import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.entity.User;
-import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
 import com.lachlan.kingofthecourt.data.relation.UserGameCrossRef;
 import com.lachlan.kingofthecourt.data.relation.UserWithGames;
 import com.lachlan.kingofthecourt.util.Validation;
 
-import java.util.List;
-
 public class UserRepository {
-    private UserDAO userDAO;
-    private LiveData<User> currentUser;
-    private RemoteDB remoteDB;
-    private UserGameRefDAO userGameRefDAO;
-    private Validation valid;
+    private final UserDAO userDAO;
+    private final LiveData<User> currentUser;
+    private final RemoteDB remoteDB;
+    private final UserGameRefDAO userGameRefDAO;
+    private final Validation valid;
 
     public UserRepository(Application application) {
         LocalDB localDB = LocalDB.getInstance(application);
@@ -45,7 +39,7 @@ public class UserRepository {
         return userDAO.getAllUserGames(userId);
     }
 
-    public void insertUser(final User user){
+    public void insertUser(final User user) {
         LocalDB.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -74,7 +68,7 @@ public class UserRepository {
         });
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         LocalDB.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -92,7 +86,7 @@ public class UserRepository {
         });
     }
 
-    public void deleteUser(final User user){
+    public void deleteUser(final User user) {
         LocalDB.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -101,7 +95,7 @@ public class UserRepository {
         });
     }
 
-    public void updateUser(final User user){
+    public void updateUser(final User user) {
         LocalDB.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {

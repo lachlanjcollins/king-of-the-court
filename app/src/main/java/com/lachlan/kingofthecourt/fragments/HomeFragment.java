@@ -1,14 +1,12 @@
 package com.lachlan.kingofthecourt.fragments;
 
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,9 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lachlan.kingofthecourt.data.entity.User;
 import com.lachlan.kingofthecourt.data.relation.UserWithGames;
 import com.lachlan.kingofthecourt.databinding.FragmentHomeBinding;
-import com.lachlan.kingofthecourt.ui.adapters.CourtRecyclerAdapter;
 import com.lachlan.kingofthecourt.ui.adapters.HomeRecyclerAdapter;
-import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
 import com.lachlan.kingofthecourt.ui.viewmodel.HomeViewModel;
 import com.lachlan.kingofthecourt.ui.viewmodel.SharedViewModel;
 

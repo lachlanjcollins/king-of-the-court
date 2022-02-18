@@ -3,6 +3,12 @@ package com.lachlan.kingofthecourt.fragments;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -12,19 +18,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.TimePicker;
-import android.widget.Toast;
-
-import com.lachlan.kingofthecourt.R;
 import com.lachlan.kingofthecourt.activities.MainActivity;
 import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.databinding.FragmentCreateGameBinding;
-import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
 import com.lachlan.kingofthecourt.ui.viewmodel.CreateGameViewModel;
 import com.lachlan.kingofthecourt.util.Validation;
 

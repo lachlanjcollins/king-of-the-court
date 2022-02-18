@@ -9,10 +9,11 @@ import com.lachlan.kingofthecourt.data.entity.Game;
 import java.util.List;
 
 public class CourtWithGames {
-    @Embedded public Court court;
+    @Embedded
+    public Court court;
     @Relation(
-       parentColumn = "courtId",
-       entityColumn = "locationId"
+            parentColumn = "courtId",
+            entityColumn = "locationId"
     )
     public List<Game> games;
 }

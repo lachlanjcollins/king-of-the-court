@@ -32,7 +32,7 @@ public class GameFragment extends Fragment {
         View view = binding.getRoot();
 
         Game game = GameFragmentArgs.fromBundle(getArguments()).getGame();
-        Court court = GameFragmentArgs.fromBundle(getArguments()).getCourt();
+        String courtId = GameFragmentArgs.fromBundle(getArguments()).getCourtId();
         ((MainActivity) getActivity()).setActionBarTitle("Game Details");
 
         gameViewModel = ViewModelProvider
@@ -41,16 +41,22 @@ public class GameFragment extends Fragment {
                 .create(GameViewModel.class);
 
         gameViewModel.setCurrentGame(game.getGameId());
-        gameViewModel.setCourt(court);
+        gameViewModel.setCourt(courtId);
 
         binding.buttonLeaveGame.setVisibility(View.INVISIBLE);
 
         gameViewModel.getCurrentGame().observe(getViewLifecycleOwner(), new Observer<Game>() {
             @Override
             public void onChanged(Game game) {
-                binding.textLocationName.setText(court.getLocationName());
                 binding.textDate.setText(gameViewModel.getFormattedDate(game));
                 binding.textTime.setText(gameViewModel.getFormattedTime(game));
+            }
+        });
+
+        gameViewModel.getCourt().observe(getViewLifecycleOwner(), new Observer<Court>() {
+            @Override
+            public void onChanged(Court court) {
+                binding.textLocationName.setText(court.getLocationName());
             }
         });
 
@@ -69,8 +75,10 @@ public class GameFragment extends Fragment {
                 gameViewModel.getNumPlayers().observe(getViewLifecycleOwner(), new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
-                        gameViewModel.updateIsGameFull();
-                        binding.textNumPlayers.setText(integer + " / 10");
+                        if (integer != 0) {
+                            gameViewModel.updateIsGameFull();
+                            binding.textNumPlayers.setText(integer + " / 10");
+                        }
                     }
                 });
             }
@@ -118,6 +126,7 @@ public class GameFragment extends Fragment {
                 binding.buttonJoinGame.setBackgroundResource(R.drawable.bg_button);
             }
         });
+
 
         return view;
     }

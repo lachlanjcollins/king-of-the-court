@@ -12,7 +12,9 @@ import com.lachlan.kingofthecourt.data.dao.UserGameRefDAO;
 import com.lachlan.kingofthecourt.data.database.LocalDB;
 import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.data.entity.User;
+import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
 import com.lachlan.kingofthecourt.data.relation.UserGameCrossRef;
+import com.lachlan.kingofthecourt.data.relation.UserWithGames;
 
 import java.util.List;
 
@@ -32,8 +34,11 @@ public class UserRepository {
 
     public LiveData<User> getCurrentUser() {
         remoteDB.getCurrentUser(this);
-
         return currentUser;
+    }
+
+    public LiveData<UserWithGames> getAllUserGames(String userId) {
+        return userDAO.getAllUserGames(userId);
     }
 
     public void insertUser(final User user){

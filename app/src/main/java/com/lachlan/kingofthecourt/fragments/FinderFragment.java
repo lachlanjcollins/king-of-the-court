@@ -212,7 +212,8 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mMpaView.onDestroy();
+        if (mMpaView != null)
+            mMpaView.onDestroy();
     }
 
     @Override

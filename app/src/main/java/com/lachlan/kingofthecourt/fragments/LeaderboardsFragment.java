@@ -17,9 +17,6 @@ import com.lachlan.kingofthecourt.ui.viewmodel.LeaderboardsViewModel;
 
 public class LeaderboardsFragment extends Fragment {
 
-    // @TODO: Update class to use bindings on layout elements?
-    // @TODO: Clean up class to only use necessary stuff.
-
     private LeaderboardsViewModel leaderboardsViewModel;
     private FragmentLeaderboardsBinding binding;
 

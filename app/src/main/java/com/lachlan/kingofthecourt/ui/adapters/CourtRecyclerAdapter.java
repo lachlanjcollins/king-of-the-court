@@ -1,5 +1,6 @@
 package com.lachlan.kingofthecourt.ui.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lachlan.kingofthecourt.data.repository.GameRepository;
-import com.lachlan.kingofthecourt.data.repository.UserRepository;
+
 import com.lachlan.kingofthecourt.databinding.RecyclerCourtBinding;
 import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.entity.Game;
@@ -22,7 +22,9 @@ import com.lachlan.kingofthecourt.fragments.CourtFragmentDirections;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -63,13 +65,24 @@ public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull CourtRecyclerAdapter.ViewHolder holder, int position) {
         Game selectedGame = gamesList.get(position);
+
+        // Comparing the date of the game to the current date and removing from recycler view if the game date is in the past
+        LocalDate localDate = LocalDate.now();
+        Date gameDate = selectedGame.getDateTime();
+        LocalDate localGameDate = Instant.ofEpochMilli(gameDate.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+
+        if (localDate.isAfter(localGameDate)) {
+            holder.itemView.setVisibility(View.GONE);
+            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+        }
+
         holder.textDate.setText(getFormattedDate(selectedGame));
         holder.textTime.setText(getFormattedTime(selectedGame));
         holder.buttonViewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavController navController = Navigation.findNavController(view);
-                NavDirections nav = CourtFragmentDirections.actionNavigationCourtToNavigationGame(selectedGame, court.getValue());
+                NavDirections nav = CourtFragmentDirections.actionNavigationCourtToNavigationGame(selectedGame, selectedGame.getLocationId());
                 navController.navigate(nav);
             }
         });

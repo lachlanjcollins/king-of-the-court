@@ -5,10 +5,12 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.lachlan.kingofthecourt.data.dao.GameDAO;
+import com.lachlan.kingofthecourt.data.dao.UserGameRefDAO;
 import com.lachlan.kingofthecourt.data.database.LocalDB;
 import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
+import com.lachlan.kingofthecourt.data.relation.UserWithGames;
 
 import java.util.Date;
 import java.util.List;
@@ -18,6 +20,7 @@ public class GameRepository {
     private LiveData<List<Game>> allGames;
     private RemoteDB remoteDB;
     private UserRepository userRepository;
+    private UserGameRefDAO userGameRefDAO;
 
     public GameRepository(Application application) {
         LocalDB localDB = LocalDB.getInstance(application);
@@ -25,15 +28,15 @@ public class GameRepository {
         allGames = gameDAO.getAll();
         remoteDB = new RemoteDB();
         userRepository = new UserRepository(application);
+        userGameRefDAO = localDB.userGameRefDAO();
     }
 
     public LiveData<List<Game>> getAllGames() {
-        remoteDB.getAllGames(this);
+        remoteDB.getAllGames(this, userRepository);
         return allGames;
     }
 
     public LiveData<Game> getGameById(String gameId) {
-//        remoteDB.getAllGames(this);
         return gameDAO.findByID(gameId);
     }
 

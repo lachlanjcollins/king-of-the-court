@@ -12,6 +12,7 @@ import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.entity.User;
 import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
+import com.lachlan.kingofthecourt.data.repository.CourtRepository;
 import com.lachlan.kingofthecourt.data.repository.GameRepository;
 import com.lachlan.kingofthecourt.data.repository.UserRepository;
 
@@ -21,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 public class GameViewModel extends AndroidViewModel {
-    private Court court;
+    private LiveData<Court> court;
     private LiveData<Game> currentGame;
     private LiveData<GameWithUsers> gameWithUsers;
 
@@ -33,6 +34,7 @@ public class GameViewModel extends AndroidViewModel {
 
     private GameRepository gameRepository;
     private UserRepository userRepository;
+    private CourtRepository courtRepository;
 
     public GameViewModel(Application application) {
         super(application);
@@ -41,6 +43,7 @@ public class GameViewModel extends AndroidViewModel {
         isGameFull = new MutableLiveData<>();
         inGame = new MutableLiveData<>();
         gameRepository = new GameRepository(application);
+        courtRepository = new CourtRepository(application);
         userRepository = new UserRepository(application);
     }
 
@@ -69,8 +72,8 @@ public class GameViewModel extends AndroidViewModel {
         gameWithUsers = gameRepository.getAllGameUsers(gameId);
     }
 
-    public void setCourt(Court court) {
-        this.court = court;
+    public void setCourt(String courtId) {
+        this.court = courtRepository.getCourtById(courtId);
     }
 
     public LiveData<Game> getCurrentGame() {
@@ -81,7 +84,7 @@ public class GameViewModel extends AndroidViewModel {
         return gameWithUsers;
     }
 
-    public Court getCourt() {
+    public LiveData<Court> getCourt() {
         return court;
     }
 
@@ -130,7 +133,7 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public String getFormattedTime(Game game) {
-        DateFormat time = new SimpleDateFormat("hh:mm:ss a"); //@TODO: Figure out timezones
+        DateFormat time = new SimpleDateFormat("hh:mm:ss a");
         Date dateTime = game.getDateTime();
         return time.format(dateTime);
     }

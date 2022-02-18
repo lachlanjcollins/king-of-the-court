@@ -24,7 +24,7 @@ public interface GameDAO {
     LiveData<Game> findByID(String id);
 
     @Transaction
-    @Query("SELECT * FROM Game")
+    @Query("SELECT * FROM Game ORDER BY dateTime DESC")
     LiveData<List<GameWithUsers>> getAllGameWithUsers();
 
     @Transaction

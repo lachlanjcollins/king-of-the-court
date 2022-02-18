@@ -66,13 +66,6 @@ public class CourtRecyclerAdapter extends RecyclerView.Adapter<CourtRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull CourtRecyclerAdapter.ViewHolder holder, int position) {
         Game selectedGame = gamesList.get(position);
-        Validation valid = new Validation();
-
-        // Comparing the date of the game to the current date and removing from recycler view if the game date is in the past
-        if (!valid.inFuture(selectedGame.getDateTime())) {
-            holder.itemView.setVisibility(View.GONE);
-            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
-        }
 
         holder.textDate.setText(getFormattedDate(selectedGame));
         holder.textTime.setText(getFormattedTime(selectedGame));

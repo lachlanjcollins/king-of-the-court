@@ -32,6 +32,7 @@ import com.lachlan.kingofthecourt.data.repository.UserRepository;
 import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
 import com.lachlan.kingofthecourt.ui.viewmodel.FinderViewModel;
 import com.lachlan.kingofthecourt.fragments.EditProfileFragment;
+import com.lachlan.kingofthecourt.util.Validation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,9 +43,11 @@ import java.util.Map;
 
 public class RemoteDB {
     private FirebaseFirestore firebaseFirestore;
+    private Validation valid;
 
     public RemoteDB() {
         firebaseFirestore = FirebaseFirestore.getInstance();
+        valid = new Validation();
     }
 
     public void registerUser(NewUserActivity activity, User userInfo) {
@@ -130,18 +133,20 @@ public class RemoteDB {
                                 Date dateTime = timestamp.toDate();
                                 String courtId = document.getData().get("courtId").toString();
 
-                                gameRepository.insertGame(new Game(gameId, creatorId, dateTime, courtId));
+                                if (valid.inFuture(dateTime)) {
+                                    gameRepository.insertGame(new Game(gameId, creatorId, dateTime, courtId));
 
-                                List<String> players = (List<String>) document.get("players");
-                                for (String playerId : players) {
-                                    firebaseFirestore.collection("users").document(playerId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            User user = documentSnapshot.toObject(User.class);
-                                            userRepository.insertUser(user);
-                                            userRepository.insertUserGameRef(user.getUserId(), gameId);
-                                        }
-                                    });
+                                    List<String> players = (List<String>) document.get("players");
+                                    for (String playerId : players) {
+                                        firebaseFirestore.collection("users").document(playerId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                User user = documentSnapshot.toObject(User.class);
+                                                userRepository.insertUser(user);
+                                                userRepository.insertUserGameRef(user.getUserId(), gameId);
+                                            }
+                                        });
+                                    }
                                 }
                             }
                         } else {

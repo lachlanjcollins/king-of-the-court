@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // The shared view model instantiates the current user object (LiveData)
-//        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         sharedViewModel = ViewModelProvider
                 .AndroidViewModelFactory
                 .getInstance(getApplication())

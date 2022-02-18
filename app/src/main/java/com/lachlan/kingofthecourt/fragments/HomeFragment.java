@@ -49,11 +49,12 @@ public class HomeFragment extends Fragment {
         View view = binding.getRoot();
 
         final TextView textView = binding.textHome;
+        RecyclerView recyclerView = binding.recyclerHome;
 
         homeViewModel.getUserWithGames().observe(getViewLifecycleOwner(), new Observer<UserWithGames>() {
             @Override
             public void onChanged(UserWithGames userWithGames) {
-                if (userWithGames.games != null && userWithGames.games.size() > 0) {
+                if (userWithGames != null && userWithGames.games.size() > 0) {
                     homeViewModel.sortGameList();
                     RecyclerView recyclerView = binding.recyclerHome;
                     adapter = new HomeRecyclerAdapter(userWithGames.games);
@@ -75,7 +76,8 @@ public class HomeFragment extends Fragment {
         sharedViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                textView.setText("Welcome " + user.getFirstName() + ", here's a list of your upcoming games.");
+                if (user != null)
+                    textView.setText("Welcome " + user.getFirstName() + ", here's a list of your upcoming games.");
             }
         });
 

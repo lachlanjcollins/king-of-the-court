@@ -41,7 +41,7 @@ public class GameFragment extends Fragment {
                 .AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())
                 .create(GameViewModel.class);
-
+        
         gameViewModel.setCurrentGame(game.getGameId());
         gameViewModel.setCourt(courtId);
 

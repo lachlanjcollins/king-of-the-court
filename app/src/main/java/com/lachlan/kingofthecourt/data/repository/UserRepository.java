@@ -11,10 +11,12 @@ import com.lachlan.kingofthecourt.data.dao.UserDAO;
 import com.lachlan.kingofthecourt.data.dao.UserGameRefDAO;
 import com.lachlan.kingofthecourt.data.database.LocalDB;
 import com.lachlan.kingofthecourt.data.database.RemoteDB;
+import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.entity.User;
 import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
 import com.lachlan.kingofthecourt.data.relation.UserGameCrossRef;
 import com.lachlan.kingofthecourt.data.relation.UserWithGames;
+import com.lachlan.kingofthecourt.util.Validation;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class UserRepository {
     private LiveData<User> currentUser;
     private RemoteDB remoteDB;
     private UserGameRefDAO userGameRefDAO;
+    private Validation valid;
 
     public UserRepository(Application application) {
         LocalDB localDB = LocalDB.getInstance(application);
@@ -30,6 +33,7 @@ public class UserRepository {
         currentUser = userDAO.findByID(FirebaseAuth.getInstance().getUid());
         userGameRefDAO = localDB.userGameRefDAO();
         remoteDB = new RemoteDB();
+        valid = new Validation();
     }
 
     public LiveData<User> getCurrentUser() {
@@ -38,7 +42,19 @@ public class UserRepository {
     }
 
     public LiveData<UserWithGames> getAllUserGames(String userId) {
-        return userDAO.getAllUserGames(userId);
+        LiveData<UserWithGames> userWithGames = userDAO.getAllUserGames(userId); //TODO: might not work
+        if (userWithGames.getValue() != null) {
+            Log.e("TAG", "User with games not null");
+            List<Game> gameList = userWithGames.getValue().games;
+            for (int i = 0 ; i > gameList.size() ; i++) {
+                Log.e("TAG", "Cycling through games: " + gameList.get(i));
+                if (!valid.inFuture(gameList.get(i).getDateTime())) {
+                    Log.e("TAG", "Game removed is: " + gameList.get(i).getDateTime());
+                    userWithGames.getValue().games.remove(gameList.get(i));
+                }
+            }
+        }
+        return userWithGames;
     }
 
     public void insertUser(final User user){

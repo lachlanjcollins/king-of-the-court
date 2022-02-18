@@ -1,5 +1,6 @@
 package com.lachlan.kingofthecourt.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.lachlan.kingofthecourt.activities.MainActivity;
 import com.lachlan.kingofthecourt.R;
+import com.lachlan.kingofthecourt.data.entity.User;
 import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
 import com.lachlan.kingofthecourt.databinding.FragmentGameBinding;
 import com.lachlan.kingofthecourt.data.entity.Court;
@@ -67,9 +69,11 @@ public class GameFragment extends Fragment {
                     gameViewModel.setIsCreator(game);
                     gameViewModel.setInGame(gameWithUsers.users);
                     gameViewModel.setNumPlayers(gameWithUsers.users.size());
+                    gameViewModel.setCreator();
                     if (gameViewModel.getIsCreator()) {
                         binding.buttonJoinGame.setClickable(false);
                         binding.buttonJoinGame.setBackgroundResource(R.drawable.bg_button_grey);
+                        binding.textGameCreator.setTextColor(getResources().getColor(R.color.green));
                     }
                 }
                 gameViewModel.getNumPlayers().observe(getViewLifecycleOwner(), new Observer<Integer>() {
@@ -81,6 +85,13 @@ public class GameFragment extends Fragment {
                         }
                     }
                 });
+            }
+        });
+
+        gameViewModel.getCreator().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                binding.textGameCreator.setText(user.getFirstName() + " " + user.getLastName());
             }
         });
 
@@ -111,7 +122,7 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 gameViewModel.joinGame();
-                Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Joined Game", Toast.LENGTH_SHORT).show();
                 binding.buttonJoinGame.setClickable(false);
                 binding.buttonJoinGame.setBackgroundResource(R.drawable.bg_button_grey);
             }
@@ -121,6 +132,7 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 gameViewModel.leaveGame();
+                Toast.makeText(getActivity(), "Left Game", Toast.LENGTH_SHORT).show();
                 binding.buttonLeaveGame.setVisibility(View.INVISIBLE);
                 binding.buttonJoinGame.setClickable(true);
                 binding.buttonJoinGame.setBackgroundResource(R.drawable.bg_button);

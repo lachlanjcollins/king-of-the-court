@@ -20,6 +20,7 @@ import com.lachlan.kingofthecourt.databinding.RecyclerCourtBinding;
 import com.lachlan.kingofthecourt.databinding.RecyclerHomeBinding;
 import com.lachlan.kingofthecourt.fragments.CourtFragmentDirections;
 import com.lachlan.kingofthecourt.fragments.HomeFragmentDirections;
+import com.lachlan.kingofthecourt.util.Validation;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -64,13 +65,10 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull HomeRecyclerAdapter.ViewHolder holder, int position) {
         Game selectedGame = gamesList.get(position);
+        Validation valid = new Validation();
 
         // Comparing the date of the game to the current date and removing from recycler view if the game date is in the past
-        LocalDate localDate = LocalDate.now();
-        Date gameDate = selectedGame.getDateTime();
-        LocalDate localGameDate = Instant.ofEpochMilli(gameDate.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-
-        if (localDate.isAfter(localGameDate)) {
+        if (!valid.inFuture(selectedGame.getDateTime())) {
             holder.itemView.setVisibility(View.GONE);
             holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
         }

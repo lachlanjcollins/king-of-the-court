@@ -26,10 +26,12 @@ import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.databinding.FragmentCreateGameBinding;
 import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
 import com.lachlan.kingofthecourt.ui.viewmodel.CreateGameViewModel;
+import com.lachlan.kingofthecourt.util.Validation;
 
 public class CreateGameFragment extends Fragment implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     private FragmentCreateGameBinding binding;
     private CreateGameViewModel createGameViewModel;
+    private Validation valid;
     private int year;
     private int month;
     private int day;
@@ -40,6 +42,8 @@ public class CreateGameFragment extends Fragment implements TimePickerDialog.OnT
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCreateGameBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        valid = new Validation();
 
         createGameViewModel = ViewModelProvider
                 .AndroidViewModelFactory
@@ -70,9 +74,13 @@ public class CreateGameFragment extends Fragment implements TimePickerDialog.OnT
         binding.buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //@TODO: Check if date is in the past
-                if (binding.editDate.getText().toString() != "" && binding.editTime.getText().toString() != "") {
-                    createGameViewModel.setDateTime(year, month, day, hour, minute);
+                if (valid.isBlank(binding.editDate.getText().toString()) || valid.isBlank(binding.editTime.getText().toString())) {
+                    Toast.makeText(getContext(), "Enter All Fields", Toast.LENGTH_SHORT).show();
+
+                } else if (!createGameViewModel.setDateTime(year, month, day, hour, minute)) {
+                    Toast.makeText(getContext(), "Game must be in the future", Toast.LENGTH_SHORT).show();
+
+                } else {
                     createGameViewModel.createGame(court);
                     Toast.makeText(getContext(), "Game Created", Toast.LENGTH_SHORT).show();
                     NavController navController = NavHostFragment.findNavController(getParentFragment());

@@ -31,6 +31,7 @@ public class GameViewModel extends AndroidViewModel {
     private MutableLiveData<Integer> numPlayers;
     private MutableLiveData<Boolean> isGameFull;
     private MutableLiveData<Boolean> inGame;
+    private MutableLiveData<User> creator;
 
     private GameRepository gameRepository;
     private UserRepository userRepository;
@@ -45,6 +46,7 @@ public class GameViewModel extends AndroidViewModel {
         gameRepository = new GameRepository(application);
         courtRepository = new CourtRepository(application);
         userRepository = new UserRepository(application);
+        creator = new MutableLiveData<>();
     }
 
     public void updateIsGameFull() {
@@ -111,6 +113,20 @@ public class GameViewModel extends AndroidViewModel {
             else
                 inGame.setValue(false);
         }
+    }
+
+    public void setCreator() {
+        if (gameWithUsers.getValue() != null && gameWithUsers.getValue().users.size() > 0) {
+            for (User user : gameWithUsers.getValue().users) {
+                if (user.getUserId().equals(gameWithUsers.getValue().game.getCreatorId())) {
+                    creator.setValue(user);
+                }
+            }
+        }
+    }
+
+    public MutableLiveData<User> getCreator() {
+        return creator;
     }
 
     public MutableLiveData<Boolean> getIsGameFull() {

@@ -1,5 +1,7 @@
 package com.lachlan.kingofthecourt.util;
 
+import java.util.Date;
+
 /**
  * Class which performs validation of various conditions.
  *
@@ -45,5 +47,16 @@ public class Validation {
      */
     public boolean isBlank(String input) {
         return input.trim().length() == 0;
+    }
+
+    /**
+     * Method that determines whether a date is in the future and returns a boolean condition.
+     *
+     * @param date A date object representing the input that is to be tested.
+     * @return True if the date is in the future, False otherwise.
+     */
+    public boolean inFuture(Date date) {
+        Date currentDate = new Date();
+        return (date.compareTo(currentDate) > 0);
     }
 }

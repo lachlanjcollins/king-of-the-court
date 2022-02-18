@@ -26,8 +26,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/bg_edit_text"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:hint="@string/placeholder"
         android:textAlignment="center"
+        android:textColor="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,8 +58,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/bg_edit_text"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:hint="@string/placeholder"
         android:textAlignment="center"
+        android:textColor="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,8 +89,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/bg_edit_text"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:hint="@string/placeholder"
         android:textAlignment="center"
+        android:textColor="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,17 +105,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="40dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/bg_button"
         android:text="Update"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEditProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPosition" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textProfile"
@@ -122,7 +134,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/logOutButton"
+        android:id="@+id/buttonLogOut"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -138,7 +150,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/editProfileButton"
+        android:id="@+id/buttonEditProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -148,7 +160,7 @@
         android:text="Edit Profile"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/logOutButton"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLogOut"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />

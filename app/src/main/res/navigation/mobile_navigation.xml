@@ -29,26 +29,7 @@
         android:id="@+id/navigation_profile"
         android:name="com.lachlan.kingofthecourt.fragments.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_navigation_profile_to_navigation_edit_profile"
-            app:destination="@id/navigation_edit_profile"
-            app:enterAnim="@anim/fui_slide_in_right"
-            app:exitAnim="@anim/fui_slide_out_left"
-            app:popExitAnim="@anim/nav_default_exit_anim" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_edit_profile"
-        android:name="com.lachlan.kingofthecourt.fragments.EditProfileFragment"
-        android:label="@string/title_edit_profile"
-        tools:layout="@layout/fragment_edit_profile" >
-        <action
-            android:id="@+id/action_navigation_edit_profile_to_navigation_profile"
-            app:destination="@id/navigation_profile"
-            app:enterAnim="@anim/fui_slide_in_right"
-            app:popExitAnim="@anim/fui_slide_out_left" />
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
 
 
     <fragment

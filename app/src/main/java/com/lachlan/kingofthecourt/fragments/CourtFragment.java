@@ -1,6 +1,7 @@
 package com.lachlan.kingofthecourt.fragments;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +58,7 @@ public class CourtFragment extends Fragment {
                     @Override
                     public void onChanged(CourtWithGames courtWithGames) {
                         if (courtWithGames.games != null && courtWithGames.games.size() > 0) {
+                            binding.textNoGames.setText("");
                             courtViewModel.sortGameList();
                             RecyclerView recyclerView = binding.recyclerCourt;
                             adapter = new CourtRecyclerAdapter(courtWithGames.games, courtViewModel.getCurrentCourt());
@@ -64,6 +66,10 @@ public class CourtFragment extends Fragment {
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setItemAnimator(new DefaultItemAnimator());
                             recyclerView.setAdapter(adapter);
+                        }
+                        if (courtViewModel.getGamesAtCourt().getValue() != null && courtViewModel.getGamesAtCourt().getValue().games.size() == 0) {
+                            binding.textNoGames.setVisibility(View.VISIBLE);
+                            binding.textNoGames.setText("No upcoming games scheduled at " + courtWithGames.court.getLocationName() + ".\nSchedule a new game by pressing 'create game' below.");
                         }
                     }
                 });

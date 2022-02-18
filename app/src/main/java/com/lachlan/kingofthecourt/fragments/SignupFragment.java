@@ -26,6 +26,7 @@ public class SignupFragment extends Fragment {
 
     private FragmentSignupBinding binding;
     private FirebaseAuth auth;
+    private Validation valid;
 
     @Nullable
     @Override
@@ -35,6 +36,7 @@ public class SignupFragment extends Fragment {
         binding = FragmentSignupBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         auth = FirebaseAuth.getInstance();
+        valid = new Validation();
 
         binding.registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +53,8 @@ public class SignupFragment extends Fragment {
                     binding.passEditText.setBackgroundResource(R.drawable.bg_edit_text_red);
                     binding.confirmPassEditText.setBackgroundResource(R.drawable.bg_edit_text_red);
                     Toast.makeText(getContext(), "Passwords do not match", Toast.LENGTH_LONG).show();
+                } else if (!valid.isValidPassword(pass)) {
+                    Toast.makeText(getContext(), "Ensure password satisfies requirements", Toast.LENGTH_SHORT).show();
                 } else {
                     registerUser(email, pass);
                 }

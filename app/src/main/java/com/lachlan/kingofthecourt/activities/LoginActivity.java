@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ActivityLoginBinding binding;
     private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseFirestore db;
+
 
     @Override
     protected void onStart() {
@@ -66,9 +66,8 @@ public class LoginActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
-
-        ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+        ActivityResultLauncher<Intent> resultLauncher =
+                registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {

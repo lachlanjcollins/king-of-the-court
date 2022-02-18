@@ -1,6 +1,8 @@
 package com.lachlan.kingofthecourt.util;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class which performs validation of various conditions.
@@ -58,5 +60,19 @@ public class Validation {
     public boolean inFuture(Date date) {
         Date currentDate = new Date();
         return (date.compareTo(currentDate) > 0);
+    }
+
+    /**
+     * Method that determines whether a given password matches form criteria and returns a boolean condition.
+     *
+     * @param password A string representing the password input that is to be tested.
+     * @return True if the password satisfies the form requirements, False otherwise.
+     */
+    public boolean isValidPassword(String password) {
+        // Password must be between 6 and 20 characters and contain a special character
+        final String PATTERN = "^(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{6,20}";
+        final Pattern pattern = Pattern.compile(PATTERN);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
     }
 }

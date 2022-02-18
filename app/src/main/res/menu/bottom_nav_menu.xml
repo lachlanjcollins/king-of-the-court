@@ -10,10 +10,10 @@
         android:icon="@drawable/ic_finder_black_24"
         android:title="@string/title_finder" />
 
-    <item
-        android:id="@+id/navigation_leaderboards"
-        android:icon="@drawable/ic_leaderboard_black_24"
-        android:title="@string/title_leaderboards" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_leaderboards"-->
+<!--        android:icon="@drawable/ic_leaderboard_black_24"-->
+<!--        android:title="@string/title_leaderboards" />-->
 
     <item
         android:id="@+id/navigation_profile"

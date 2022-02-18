@@ -1,6 +1,7 @@
 package com.lachlan.kingofthecourt.fragments;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(UserWithGames userWithGames) {
                 if (userWithGames != null && userWithGames.games.size() > 0) {
+                    binding.textNoUserGames.setVisibility(View.INVISIBLE);
                     homeViewModel.sortGameList();
                     RecyclerView recyclerView = binding.recyclerHome;
                     adapter = new HomeRecyclerAdapter(userWithGames.games);
@@ -63,13 +65,18 @@ public class HomeFragment extends Fragment {
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                     recyclerView.setAdapter(adapter);
                 }
+
+                if (homeViewModel.getUserWithGames().getValue() != null && homeViewModel.getUserWithGames().getValue().games.size() == 0) {
+                    binding.textNoUserGames.setVisibility(View.VISIBLE);
+                    binding.textNoUserGames.setText("No upcoming games scheduled. \n \n Create / join a game by searching for nearby courts in the Finder page.");
+                }
             }
         });
 
         homeViewModel.getDate().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                binding.textTodayDate.setText(s);
+                binding.textTodayDate.setText("Today's Date: " + s);
             }
         });
 
@@ -77,7 +84,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(User user) {
                 if (user != null)
-                    textView.setText("Welcome " + user.getFirstName() + ", here's a list of your upcoming games.");
+                    textView.setText("Upcoming games");
             }
         });
 

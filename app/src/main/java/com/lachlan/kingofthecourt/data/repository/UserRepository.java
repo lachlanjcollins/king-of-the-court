@@ -42,19 +42,7 @@ public class UserRepository {
     }
 
     public LiveData<UserWithGames> getAllUserGames(String userId) {
-        LiveData<UserWithGames> userWithGames = userDAO.getAllUserGames(userId); //TODO: might not work
-        if (userWithGames.getValue() != null) {
-            Log.e("TAG", "User with games not null");
-            List<Game> gameList = userWithGames.getValue().games;
-            for (int i = 0 ; i > gameList.size() ; i++) {
-                Log.e("TAG", "Cycling through games: " + gameList.get(i));
-                if (!valid.inFuture(gameList.get(i).getDateTime())) {
-                    Log.e("TAG", "Game removed is: " + gameList.get(i).getDateTime());
-                    userWithGames.getValue().games.remove(gameList.get(i));
-                }
-            }
-        }
-        return userWithGames;
+        return userDAO.getAllUserGames(userId);
     }
 
     public void insertUser(final User user){

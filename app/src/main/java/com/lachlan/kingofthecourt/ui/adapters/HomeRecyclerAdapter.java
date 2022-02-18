@@ -1,5 +1,6 @@
 package com.lachlan.kingofthecourt.ui.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,9 @@ import com.lachlan.kingofthecourt.fragments.HomeFragmentDirections;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -60,6 +64,17 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull HomeRecyclerAdapter.ViewHolder holder, int position) {
         Game selectedGame = gamesList.get(position);
+
+        // Comparing the date of the game to the current date and removing from recycler view if the game date is in the past
+        LocalDate localDate = LocalDate.now();
+        Date gameDate = selectedGame.getDateTime();
+        LocalDate localGameDate = Instant.ofEpochMilli(gameDate.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+
+        if (localDate.isAfter(localGameDate)) {
+            holder.itemView.setVisibility(View.GONE);
+            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+        }
+
         holder.textDate.setText(getFormattedDate(selectedGame));
         holder.textTime.setText(getFormattedTime(selectedGame));
         holder.buttonViewGame.setOnClickListener(new View.OnClickListener() {

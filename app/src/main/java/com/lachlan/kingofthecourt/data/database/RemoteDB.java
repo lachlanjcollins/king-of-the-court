@@ -138,7 +138,6 @@ public class RemoteDB {
                                         @Override
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                                             User user = documentSnapshot.toObject(User.class);
-                                            Log.e("REMOTE TAG", user.getUserId());
                                             userRepository.insertUser(user);
                                             userRepository.insertUserGameRef(user.getUserId(), gameId);
                                         }
@@ -161,13 +160,11 @@ public class RemoteDB {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnap) {
                         List<String> players = (List<String>) documentSnap.get("players");
-                        Log.e("TAG", "There are this many players in the document: " + players.size());
                         for (String playerId : players) {
                             firebaseFirestore.collection("users").document(playerId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                     User user = documentSnapshot.toObject(User.class);
-                                    Log.e("REMOTE TAG", user.getUserId());
                                     userRepository.insertUser(user);
                                     userRepository.insertUserGameRef(user.getUserId(), gameId);
                                 }

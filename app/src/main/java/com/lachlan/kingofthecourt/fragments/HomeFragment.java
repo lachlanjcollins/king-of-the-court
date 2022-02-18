@@ -45,22 +45,23 @@ public class HomeFragment extends Fragment {
                 .getInstance(getActivity().getApplication())
                 .create(SharedViewModel.class);
 
-
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
 
         final TextView textView = binding.textHome;
 
         homeViewModel.getUserWithGames().observe(getViewLifecycleOwner(), new Observer<UserWithGames>() {
             @Override
             public void onChanged(UserWithGames userWithGames) {
-                RecyclerView recyclerView = binding.recyclerHome;
-                adapter = new HomeRecyclerAdapter(userWithGames.games);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(adapter);
+                if (userWithGames.games != null && userWithGames.games.size() > 0) {
+                    homeViewModel.sortGameList();
+                    RecyclerView recyclerView = binding.recyclerHome;
+                    adapter = new HomeRecyclerAdapter(userWithGames.games);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerView.setAdapter(adapter);
+                }
             }
         });
 

@@ -17,7 +17,7 @@ import java.util.List;
 
 @Dao
 public interface GameDAO {
-    @Query("SELECT * FROM game ORDER BY dateTime ASC")
+    @Query("SELECT * FROM game ORDER BY dateTime DESC")
     LiveData<List<Game>> getAll();
 
     @Query("SELECT * FROM game WHERE gameId = :id LIMIT 1")

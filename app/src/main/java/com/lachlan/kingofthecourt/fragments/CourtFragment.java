@@ -56,12 +56,15 @@ public class CourtFragment extends Fragment {
                 courtViewModel.getGamesAtCourt().observe(getViewLifecycleOwner(), new Observer<CourtWithGames>() {
                     @Override
                     public void onChanged(CourtWithGames courtWithGames) {
-                        RecyclerView recyclerView = binding.recyclerCourt;
-                        adapter = new CourtRecyclerAdapter(courtWithGames.games, courtViewModel.getCurrentCourt());
-                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                        recyclerView.setLayoutManager(layoutManager);
-                        recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        recyclerView.setAdapter(adapter);
+                        if (courtWithGames.games != null && courtWithGames.games.size() > 0) {
+                            courtViewModel.sortGameList();
+                            RecyclerView recyclerView = binding.recyclerCourt;
+                            adapter = new CourtRecyclerAdapter(courtWithGames.games, courtViewModel.getCurrentCourt());
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                            recyclerView.setLayoutManager(layoutManager);
+                            recyclerView.setItemAnimator(new DefaultItemAnimator());
+                            recyclerView.setAdapter(adapter);
+                        }
                     }
                 });
             }

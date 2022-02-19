@@ -1,7 +1,6 @@
 package com.lachlan.kingofthecourt.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lachlan.kingofthecourt.activities.MainActivity;
-import com.lachlan.kingofthecourt.data.entity.Game;
+import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.relation.CourtWithGames;
 import com.lachlan.kingofthecourt.databinding.FragmentCourtBinding;
-import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.ui.adapters.CourtRecyclerAdapter;
 import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
-import com.lachlan.kingofthecourt.ui.viewmodel.SharedViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CourtFragment extends Fragment {
     private FragmentCourtBinding binding;
@@ -57,6 +51,7 @@ public class CourtFragment extends Fragment {
                     @Override
                     public void onChanged(CourtWithGames courtWithGames) {
                         if (courtWithGames.games != null && courtWithGames.games.size() > 0) {
+                            binding.textNoGames.setText("");
                             courtViewModel.sortGameList();
                             RecyclerView recyclerView = binding.recyclerCourt;
                             adapter = new CourtRecyclerAdapter(courtWithGames.games, courtViewModel.getCurrentCourt());
@@ -64,6 +59,10 @@ public class CourtFragment extends Fragment {
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setItemAnimator(new DefaultItemAnimator());
                             recyclerView.setAdapter(adapter);
+                        }
+                        if (courtViewModel.getGamesAtCourt().getValue() != null && courtViewModel.getGamesAtCourt().getValue().games.size() == 0) {
+                            binding.textNoGames.setVisibility(View.VISIBLE);
+                            binding.textNoGames.setText("No upcoming games scheduled at " + courtWithGames.court.getLocationName() + ".\n \nSchedule a new game by pressing 'create game' below.");
                         }
                     }
                 });

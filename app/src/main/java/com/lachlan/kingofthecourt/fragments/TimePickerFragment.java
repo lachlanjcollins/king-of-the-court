@@ -23,9 +23,8 @@ public class TimePickerFragment extends DialogFragment
         int minute = c.get(Calendar.MINUTE);
 
 
-
         // Create a new instance of TimePickerDialog and return it
-        return new TimePickerDialog(getContext(), R.style.MyDialogTheme,(TimePickerDialog.OnTimeSetListener) getParentFragment(), hour, minute,
+        return new TimePickerDialog(getContext(), R.style.MyDialogTheme, (TimePickerDialog.OnTimeSetListener) getParentFragment(), hour, minute,
                 DateFormat.is24HourFormat(getActivity()));
     }
 

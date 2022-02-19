@@ -7,4 +7,5 @@
     <string name="placeholder">Place Holder</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_edit_profile">Edit Profile</string>
+    <string name="about">King of the court is a mobile application that enables users to find competitive pickup basketball games in their local area. \n \nPlayers can view nearby courts and organise a game at any time. Start by searching for your local courts in the finder view and create a game or join an existing one. \n \nOnce you have joined a game, a list of your upcoming games will be displayed on the home screen.</string>
 </resources>

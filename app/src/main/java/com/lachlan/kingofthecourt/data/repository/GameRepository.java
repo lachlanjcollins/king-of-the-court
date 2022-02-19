@@ -10,17 +10,16 @@ import com.lachlan.kingofthecourt.data.database.LocalDB;
 import com.lachlan.kingofthecourt.data.database.RemoteDB;
 import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
-import com.lachlan.kingofthecourt.data.relation.UserWithGames;
 
 import java.util.Date;
 import java.util.List;
 
 public class GameRepository {
-    private GameDAO gameDAO;
-    private LiveData<List<Game>> allGames;
-    private RemoteDB remoteDB;
-    private UserRepository userRepository;
-    private UserGameRefDAO userGameRefDAO;
+    private final GameDAO gameDAO;
+    private final LiveData<List<Game>> allGames;
+    private final RemoteDB remoteDB;
+    private final UserRepository userRepository;
+    private final UserGameRefDAO userGameRefDAO;
 
     public GameRepository(Application application) {
         LocalDB localDB = LocalDB.getInstance(application);
@@ -49,7 +48,7 @@ public class GameRepository {
         remoteDB.createNewGame(courtId, creatorId, dateTime, this);
     }
 
-    public void insertGame(final Game game){
+    public void insertGame(final Game game) {
         LocalDB.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -58,7 +57,7 @@ public class GameRepository {
         });
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         LocalDB.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -67,7 +66,7 @@ public class GameRepository {
         });
     }
 
-    public void deleteGame(final Game game){
+    public void deleteGame(final Game game) {
         LocalDB.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {

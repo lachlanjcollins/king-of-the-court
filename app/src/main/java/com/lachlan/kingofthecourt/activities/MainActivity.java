@@ -1,5 +1,9 @@
 package com.lachlan.kingofthecourt.activities;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,14 +12,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.lachlan.kingofthecourt.R;
-import com.lachlan.kingofthecourt.ui.viewmodel.SharedViewModel;
 import com.lachlan.kingofthecourt.databinding.ActivityMainBinding;
+import com.lachlan.kingofthecourt.ui.viewmodel.SharedViewModel;
+import com.lachlan.kingofthecourt.util.CourtReader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -40,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // The shared view model instantiates the current user object (LiveData)
-//        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         sharedViewModel = ViewModelProvider
                 .AndroidViewModelFactory
                 .getInstance(getApplication())

@@ -1,9 +1,9 @@
 package com.lachlan.kingofthecourt.data.database;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -19,21 +19,16 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-import com.lachlan.kingofthecourt.activities.MainActivity;
 import com.lachlan.kingofthecourt.activities.NewUserActivity;
 import com.lachlan.kingofthecourt.data.entity.Court;
 import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.entity.Location;
 import com.lachlan.kingofthecourt.data.entity.User;
-import com.lachlan.kingofthecourt.data.relation.UserGameCrossRef;
 import com.lachlan.kingofthecourt.data.repository.CourtRepository;
 import com.lachlan.kingofthecourt.data.repository.GameRepository;
 import com.lachlan.kingofthecourt.data.repository.UserRepository;
-import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
-import com.lachlan.kingofthecourt.ui.viewmodel.FinderViewModel;
-import com.lachlan.kingofthecourt.fragments.EditProfileFragment;
+import com.lachlan.kingofthecourt.util.Validation;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,10 +36,12 @@ import java.util.List;
 import java.util.Map;
 
 public class RemoteDB {
-    private FirebaseFirestore firebaseFirestore;
+    private final FirebaseFirestore firebaseFirestore;
+    private final Validation valid;
 
     public RemoteDB() {
         firebaseFirestore = FirebaseFirestore.getInstance();
+        valid = new Validation();
     }
 
     public void registerUser(NewUserActivity activity, User userInfo) {
@@ -60,7 +57,7 @@ public class RemoteDB {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                       Log.e("FAIL", "Failed to add information to database.");
+                        Log.e("FAIL", "Failed to add information to database.");
                     }
                 });
     }
@@ -74,15 +71,15 @@ public class RemoteDB {
         return currentUserID;
     }
 
-        public void getCurrentUser(UserRepository userRepository) {
+    public void getCurrentUser(UserRepository userRepository) {
         firebaseFirestore.collection("users").document(getCurrentUserID()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
-                userRepository.insertUser(user);
-            }
-        });
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        User user = documentSnapshot.toObject(User.class);
+                        userRepository.insertUser(user);
+                    }
+                });
     }
 
     public void updateUser(User user) {
@@ -117,7 +114,6 @@ public class RemoteDB {
     }
 
     public void getAllGames(GameRepository gameRepository, UserRepository userRepository) {
-        gameRepository.deleteAll();
         firebaseFirestore.collection("games").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -130,18 +126,20 @@ public class RemoteDB {
                                 Date dateTime = timestamp.toDate();
                                 String courtId = document.getData().get("courtId").toString();
 
-                                gameRepository.insertGame(new Game(gameId, creatorId, dateTime, courtId));
+                                if (valid.inFuture(dateTime)) {
+                                    gameRepository.insertGame(new Game(gameId, creatorId, dateTime, courtId));
 
-                                List<String> players = (List<String>) document.get("players");
-                                for (String playerId : players) {
-                                    firebaseFirestore.collection("users").document(playerId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            User user = documentSnapshot.toObject(User.class);
-                                            userRepository.insertUser(user);
-                                            userRepository.insertUserGameRef(user.getUserId(), gameId);
-                                        }
-                                    });
+                                    List<String> players = (List<String>) document.get("players");
+                                    for (String playerId : players) {
+                                        firebaseFirestore.collection("users").document(playerId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                User user = documentSnapshot.toObject(User.class);
+                                                userRepository.insertUser(user);
+                                                userRepository.insertUserGameRef(user.getUserId(), gameId);
+                                            }
+                                        });
+                                    }
                                 }
                             }
                         } else {

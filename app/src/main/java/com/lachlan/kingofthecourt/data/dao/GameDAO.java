@@ -11,7 +11,6 @@ import androidx.room.Update;
 
 import com.lachlan.kingofthecourt.data.entity.Game;
 import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
-import com.lachlan.kingofthecourt.data.relation.UserWithGames;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public interface GameDAO {
     LiveData<Game> findByID(String id);
 
     @Transaction
-    @Query("SELECT * FROM Game")
+    @Query("SELECT * FROM Game ORDER BY dateTime DESC")
     LiveData<List<GameWithUsers>> getAllGameWithUsers();
 
     @Transaction

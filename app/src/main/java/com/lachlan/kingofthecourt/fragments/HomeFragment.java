@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,9 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lachlan.kingofthecourt.data.entity.User;
 import com.lachlan.kingofthecourt.data.relation.UserWithGames;
 import com.lachlan.kingofthecourt.databinding.FragmentHomeBinding;
-import com.lachlan.kingofthecourt.ui.adapters.CourtRecyclerAdapter;
 import com.lachlan.kingofthecourt.ui.adapters.HomeRecyclerAdapter;
-import com.lachlan.kingofthecourt.ui.viewmodel.CourtViewModel;
 import com.lachlan.kingofthecourt.ui.viewmodel.HomeViewModel;
 import com.lachlan.kingofthecourt.ui.viewmodel.SharedViewModel;
 
@@ -49,11 +46,13 @@ public class HomeFragment extends Fragment {
         View view = binding.getRoot();
 
         final TextView textView = binding.textHome;
+        RecyclerView recyclerView = binding.recyclerHome;
 
         homeViewModel.getUserWithGames().observe(getViewLifecycleOwner(), new Observer<UserWithGames>() {
             @Override
             public void onChanged(UserWithGames userWithGames) {
-                if (userWithGames.games != null && userWithGames.games.size() > 0) {
+                if (userWithGames != null && userWithGames.games.size() > 0) {
+                    binding.textNoUserGames.setVisibility(View.INVISIBLE);
                     homeViewModel.sortGameList();
                     RecyclerView recyclerView = binding.recyclerHome;
                     adapter = new HomeRecyclerAdapter(userWithGames.games);
@@ -62,20 +61,18 @@ public class HomeFragment extends Fragment {
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                     recyclerView.setAdapter(adapter);
                 }
+
+                if (homeViewModel.getUserWithGames().getValue() != null && homeViewModel.getUserWithGames().getValue().games.size() == 0) {
+                    binding.textNoUserGames.setVisibility(View.VISIBLE);
+                    binding.textNoUserGames.setText("You have no upcoming games scheduled! \n \nCreate / join a game by searching for nearby courts in the Finder page.");
+                }
             }
         });
 
         homeViewModel.getDate().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                binding.textTodayDate.setText(s);
-            }
-        });
-
-        sharedViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                textView.setText("Welcome " + user.getFirstName() + ", here's a list of your upcoming games.");
+                binding.textTodayDate.setText("Today's Date: " + s);
             }
         });
 

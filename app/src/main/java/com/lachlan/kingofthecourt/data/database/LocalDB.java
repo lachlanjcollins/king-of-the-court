@@ -32,16 +32,10 @@ import java.util.concurrent.Executors;
 @TypeConverters({Converters.class})
 
 public abstract class LocalDB extends RoomDatabase {
-    public abstract CourtDAO courtDAO();
-    public abstract GameDAO gameDAO();
-    public abstract UserDAO userDAO();
-    public abstract UserGameRefDAO userGameRefDAO();
-
-    private static LocalDB INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
-
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private static LocalDB INSTANCE;
 
     public static synchronized LocalDB getInstance(final Context context) {
         if (INSTANCE == null) {
@@ -52,4 +46,12 @@ public abstract class LocalDB extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    public abstract CourtDAO courtDAO();
+
+    public abstract GameDAO gameDAO();
+
+    public abstract UserDAO userDAO();
+
+    public abstract UserGameRefDAO userGameRefDAO();
 }

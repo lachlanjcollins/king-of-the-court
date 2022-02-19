@@ -10,7 +10,8 @@ import com.lachlan.kingofthecourt.data.entity.User;
 import java.util.List;
 
 public class UserWithGames {
-    @Embedded public User user;
+    @Embedded
+    public User user;
     @Relation(
             parentColumn = "userId",
             entityColumn = "gameId",

@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.lachlan.kingofthecourt.databinding.ActivityLoginBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -31,13 +30,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.lachlan.kingofthecourt.databinding.ActivityLoginBinding;
 import com.lachlan.kingofthecourt.ui.adapters.PagerAdapter;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ActivityLoginBinding binding;
     private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseFirestore db;
+
 
     @Override
     protected void onStart() {
@@ -66,19 +66,18 @@ public class LoginActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
-
-        ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    Intent intent = result.getData();
-                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
-                    handleSignInResult(task);
-                }
-            }
-        });
+        ActivityResultLauncher<Intent> resultLauncher =
+                registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                        new ActivityResultCallback<ActivityResult>() {
+                            @Override
+                            public void onActivityResult(ActivityResult result) {
+                                if (result.getResultCode() == Activity.RESULT_OK) {
+                                    Intent intent = result.getData();
+                                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
+                                    handleSignInResult(task);
+                                }
+                            }
+                        });
 
         binding.buttonGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,17 +130,17 @@ public class LoginActivity extends AppCompatActivity {
                     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
                     firebaseFirestore.collection("users").document(firebaseUser.getUid()).get()
                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot doc = task.getResult();
-                                if (doc.exists()) {
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                } else
-                                    startActivity(new Intent(LoginActivity.this, NewUserActivity.class));
-                            }
-                        }
-                    });
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot doc = task.getResult();
+                                        if (doc.exists()) {
+                                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        } else
+                                            startActivity(new Intent(LoginActivity.this, NewUserActivity.class));
+                                    }
+                                }
+                            });
                 }
             });
             Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show();

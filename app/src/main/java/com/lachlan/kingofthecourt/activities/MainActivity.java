@@ -16,10 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.lachlan.kingofthecourt.R;
 import com.lachlan.kingofthecourt.databinding.ActivityMainBinding;
 import com.lachlan.kingofthecourt.ui.viewmodel.SharedViewModel;
-import com.lachlan.kingofthecourt.util.CourtReader;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 

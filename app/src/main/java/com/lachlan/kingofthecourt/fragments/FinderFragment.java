@@ -63,7 +63,7 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
         finderViewModel =
                 new ViewModelProvider(this).get(FinderViewModel.class);
 
-        binding = FragmentFinderBinding.inflate(getLayoutInflater());
+        binding = FragmentFinderBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());

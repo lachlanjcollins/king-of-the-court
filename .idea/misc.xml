@@ -7,6 +7,8 @@
         <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/drawable/bg_button_grey.xml" value="0.1985" />
         <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/drawable/bg_button_red.xml" value="0.2325" />
         <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/drawable/bg_button_white.xml" value="0.226" />
+        <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/drawable/bg_edit_text.xml" value="0.5265" />
+        <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/drawable/bg_home_recycler.xml" value="0.5265" />
         <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/drawable/ic_profile_24.xml" value="0.5265" />
         <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/drawable/login_background_curved.xml" value="0.2255" />
         <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/drawable/time_picker_theme.xml" value="0.2255" />
@@ -19,7 +21,7 @@
         <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/layout/fragment_edit_profile.xml" value="0.33" />
         <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/layout/fragment_finder.xml" value="0.25886524822695034" />
         <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/layout/fragment_game.xml" value="0.5" />
-        <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/layout/fragment_home.xml" value="0.75" />
         <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/layout/fragment_login.xml" value="0.67" />
         <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Users/Locky/AndroidStudioProjects/KingoftheCourtApp/app/src/main/res/layout/fragment_signup.xml" value="0.67" />

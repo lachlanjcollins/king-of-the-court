@@ -25,7 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="90dp"
+        android:text="My Upcoming Games"
         android:textAlignment="viewStart"
         android:textColor="#000000"
         android:textSize="24sp"
@@ -35,15 +36,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025" />
+        app:layout_constraintVertical_bias="0.044" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerHome"
-        android:layout_width="394dp"
-        android:layout_height="490dp"
+        android:layout_width="380dp"
+        android:layout_height="480dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/bg_home_recycler"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_home" />
 
@@ -56,5 +60,15 @@
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerHome" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/koc_logo_small"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerHome"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

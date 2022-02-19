@@ -76,13 +76,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        sharedViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                if (user != null)
-                    textView.setText("Upcoming games");
-            }
-        });
+//        sharedViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
+//            @Override
+//            public void onChanged(User user) {
+//                if (user != null)
+//                    textView.setText("Upcoming games");
+//            }
+//        });
 
         return view;
     }

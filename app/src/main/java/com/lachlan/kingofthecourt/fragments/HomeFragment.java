@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
 
                 if (homeViewModel.getUserWithGames().getValue() != null && homeViewModel.getUserWithGames().getValue().games.size() == 0) {
                     binding.textNoUserGames.setVisibility(View.VISIBLE);
-                    binding.textNoUserGames.setText("No upcoming games scheduled. \n \n Create / join a game by searching for nearby courts in the Finder page.");
+                    binding.textNoUserGames.setText("You have no upcoming games scheduled! \n \nCreate / join a game by searching for nearby courts in the Finder page.");
                 }
             }
         });
@@ -75,14 +75,6 @@ public class HomeFragment extends Fragment {
                 binding.textTodayDate.setText("Today's Date: " + s);
             }
         });
-
-//        sharedViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
-//            @Override
-//            public void onChanged(User user) {
-//                if (user != null)
-//                    textView.setText("Upcoming games");
-//            }
-//        });
 
         return view;
     }

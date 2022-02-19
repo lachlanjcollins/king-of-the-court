@@ -62,7 +62,7 @@ public class CourtFragment extends Fragment {
                         }
                         if (courtViewModel.getGamesAtCourt().getValue() != null && courtViewModel.getGamesAtCourt().getValue().games.size() == 0) {
                             binding.textNoGames.setVisibility(View.VISIBLE);
-                            binding.textNoGames.setText("No upcoming games scheduled at " + courtWithGames.court.getLocationName() + ".\nSchedule a new game by pressing 'create game' below.");
+                            binding.textNoGames.setText("No upcoming games scheduled at " + courtWithGames.court.getLocationName() + ".\n \nSchedule a new game by pressing 'create game' below.");
                         }
                     }
                 });

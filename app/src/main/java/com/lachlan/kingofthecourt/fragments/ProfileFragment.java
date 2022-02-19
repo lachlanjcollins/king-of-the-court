@@ -15,6 +15,9 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -50,6 +53,10 @@ public class ProfileFragment extends Fragment {
         final AppCompatButton buttonEditProfile = binding.buttonEditProfile;
         final AppCompatButton buttonUpdate = binding.buttonUpdate;
         final AppCompatButton buttonLogOut = binding.buttonLogOut;
+        final AppCompatButton buttonAbout = binding.buttonAbout;
+
+        NavController navController = NavHostFragment.findNavController(this);
+
 
         sharedViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
@@ -132,6 +139,14 @@ public class ProfileFragment extends Fragment {
                     sharedViewModel.updateUser(user);
                     Toast.makeText(getContext(), "Details updated", Toast.LENGTH_SHORT);
                 }
+            }
+        });
+
+        buttonAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavDirections nav = ProfileFragmentDirections.actionNavigationProfileToAboutFragment();
+                navController.navigate(nav);
             }
         });
 

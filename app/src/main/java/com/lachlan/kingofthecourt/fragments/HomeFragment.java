@@ -63,6 +63,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 if (homeViewModel.getUserWithGames().getValue() != null && homeViewModel.getUserWithGames().getValue().games.size() == 0) {
+                    // Display a message if the user has no upcoming games scheduled
                     binding.textNoUserGames.setVisibility(View.VISIBLE);
                     binding.textNoUserGames.setText("You have no upcoming games scheduled! \n \nCreate / join a game by searching for nearby courts in the Finder page.");
                 }

@@ -82,10 +82,13 @@ public class LoginActivity extends AppCompatActivity {
         binding.buttonGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Begin google sign in process
                 resultLauncher.launch(new Intent(mGoogleSignInClient.getSignInIntent()));
             }
         });
 
+
+        // Tab layout is used to display the login and signup fragments
         TabLayout tabLayout = binding.tabLayout;
         tabLayout.addTab(tabLayout.newTab().setText("Login"));
         tabLayout.addTab(tabLayout.newTab().setText("Sign Up"));
@@ -135,9 +138,12 @@ public class LoginActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         DocumentSnapshot doc = task.getResult();
                                         if (doc.exists()) {
+                                            // If the user is an existing user, takes to home screen
                                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                        } else
+                                        } else {
+                                            // Takes the user to a different screen to fill in more details.
                                             startActivity(new Intent(LoginActivity.this, NewUserActivity.class));
+                                        }
                                     }
                                 }
                             });

@@ -9,6 +9,12 @@ import com.lachlan.kingofthecourt.data.entity.User;
 
 import java.util.List;
 
+/**
+ * Relation class which represents the relationship between games and its list of users.
+ *
+ * @author Lachlan Collins
+ * @version 20 February 2022
+ */
 public class GameWithUsers {
     @Embedded
     public Game game;

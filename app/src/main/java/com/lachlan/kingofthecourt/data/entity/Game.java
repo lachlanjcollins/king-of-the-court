@@ -10,6 +10,12 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
+/**
+ * Entity class which represents basketball game.
+ *
+ * @author Lachlan Collins
+ * @version 20 February 2022
+ */
 @Entity
 public class Game implements Parcelable {
 

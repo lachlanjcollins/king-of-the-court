@@ -1,5 +1,11 @@
 package com.lachlan.kingofthecourt.data.entity;
 
+/**
+ * Class which represents a location.
+ *
+ * @author Lachlan Collins
+ * @version 20 February 2022
+ */
 public class Location {
 
     private double latitude;

@@ -14,6 +14,12 @@ import com.lachlan.kingofthecourt.data.relation.UserGameCrossRef;
 import com.lachlan.kingofthecourt.data.relation.UserWithGames;
 import com.lachlan.kingofthecourt.util.Validation;
 
+/**
+ * A repository class that provides a level of abstraction between user data and various view model classes.
+ *
+ * @author Lachlan Collins
+ * @version 20 February 2022
+ */
 public class UserRepository {
     private final UserDAO userDAO;
     private final LiveData<User> currentUser;

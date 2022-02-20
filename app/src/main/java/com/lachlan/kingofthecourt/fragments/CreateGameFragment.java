@@ -71,12 +71,15 @@ public class CreateGameFragment extends Fragment implements TimePickerDialog.OnT
             @Override
             public void onClick(View view) {
                 if (valid.isBlank(binding.editDate.getText().toString()) || valid.isBlank(binding.editTime.getText().toString())) {
+                    // User has not entered data in all fields
                     Toast.makeText(getContext(), "Enter All Fields", Toast.LENGTH_SHORT).show();
 
                 } else if (!createGameViewModel.setDateTime(year, month, day, hour, minute)) {
+                    // Game date / time is in the past
                     Toast.makeText(getContext(), "Game must be in the future", Toast.LENGTH_SHORT).show();
 
                 } else {
+                    // Create game and navigate to home screen
                     createGameViewModel.createGame(court);
                     Toast.makeText(getContext(), "Game Created", Toast.LENGTH_SHORT).show();
                     NavController navController = NavHostFragment.findNavController(getParentFragment());
@@ -98,6 +101,7 @@ public class CreateGameFragment extends Fragment implements TimePickerDialog.OnT
 
     @Override
     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+        // Triggered when a time is selected in the time picker dialog
         binding.editTime.setText("" + hour + ":" + minute);
         this.hour = hour;
         this.minute = minute;
@@ -105,6 +109,7 @@ public class CreateGameFragment extends Fragment implements TimePickerDialog.OnT
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+        // Triggered when a date is selected in the date picker dialog
         binding.editDate.setText(day + "/" + month + "/" + year);
         this.year = year;
         this.month = month;

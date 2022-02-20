@@ -8,6 +8,12 @@ import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entity class which represents basketball court information.
+ *
+ * @author Lachlan Collins
+ * @version 20 February 2022
+ */
 @Entity
 public class Court implements Parcelable {
 

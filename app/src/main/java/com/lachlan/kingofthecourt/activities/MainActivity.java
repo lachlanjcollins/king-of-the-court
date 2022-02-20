@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Method enables the use of the back button to traverse upward in the view hierarchy
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
@@ -48,8 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
+        // Adds the three views to the bottom navigation bar
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_leaderboards, R.id.navigation_profile, R.id.navigation_finder)
+                R.id.navigation_home, R.id.navigation_profile, R.id.navigation_finder)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

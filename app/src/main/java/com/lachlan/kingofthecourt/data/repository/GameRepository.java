@@ -14,6 +14,12 @@ import com.lachlan.kingofthecourt.data.relation.GameWithUsers;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * A repository class that provides a level of abstraction between game data and various view model classes.
+ *
+ * @author Lachlan Collins
+ * @version 20 February 2022
+ */
 public class GameRepository {
     private final GameDAO gameDAO;
     private final LiveData<List<Game>> allGames;

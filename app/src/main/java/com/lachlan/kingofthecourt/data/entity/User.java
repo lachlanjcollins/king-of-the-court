@@ -4,6 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entity class which represents user information.
+ *
+ * @author Lachlan Collins
+ * @version 20 February 2022
+ */
 @Entity
 public class User {
 

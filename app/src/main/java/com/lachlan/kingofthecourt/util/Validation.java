@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * Class which performs validation of various conditions.
  *
  * @author Lachlan Collins
- * @version 20 February 2021
+ * @version 20 February 2022
  */
 public class Validation {
     /**

@@ -12,6 +12,12 @@ import com.lachlan.kingofthecourt.data.relation.CourtWithGames;
 
 import java.util.List;
 
+/**
+ * A repository class that provides a level of abstraction between court data and various view model classes.
+ *
+ * @author Lachlan Collins
+ * @version 20 February 2022
+ */
 public class CourtRepository {
     private final CourtDAO courtDAO;
     private final LiveData<List<Court>> allCourts;

@@ -39,6 +39,7 @@ public class NewUserActivity extends AppCompatActivity {
                 String position = binding.editTextPosition.getText().toString();
 
                 if (!(valid.isBlank(firstName) || valid.isBlank(lastName) || valid.isBlank(position))) {
+                    // Adds the new users information to the remote Firestore database
                     user = new User(firebaseUser.getUid(), firstName, lastName, firebaseUser.getEmail(), position);
                     db.registerUser(NewUserActivity.this, user);
                 } else
@@ -48,6 +49,7 @@ public class NewUserActivity extends AppCompatActivity {
     }
 
     public void onRegistrationSuccess(User user) {
+        // Takes the user to the main activity (displays home fragment)
         Toast.makeText(this, "Registration Success", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(NewUserActivity.this, MainActivity.class);
         startActivity(intent);

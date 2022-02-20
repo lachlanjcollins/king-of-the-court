@@ -61,6 +61,7 @@ public class CourtFragment extends Fragment {
                             recyclerView.setAdapter(adapter);
                         }
                         if (courtViewModel.getGamesAtCourt().getValue() != null && courtViewModel.getGamesAtCourt().getValue().games.size() == 0) {
+                            // Display a message if the court has no upcoming games scheduled.
                             binding.textNoGames.setVisibility(View.VISIBLE);
                             binding.textNoGames.setText("No upcoming games scheduled at " + courtWithGames.court.getLocationName() + ".\n \nSchedule a new game by pressing 'create game' below.");
                         }

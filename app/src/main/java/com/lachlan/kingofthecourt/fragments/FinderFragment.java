@@ -114,6 +114,7 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationPermissionGranted = true;
         } else {
+            // Ask user for location permission
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
@@ -125,6 +126,7 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onChanged(List<Court> courts) {
                 for (Court court : courts) {
+                    // Adds each court as a marker to the map
                     com.lachlan.kingofthecourt.data.entity.Location location = court.getLocation();
                     Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title(court.getLocationName()));
                     marker.setTag(courts.indexOf(court));
@@ -150,9 +152,9 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void updateLocationUI() {
+        // Adds the location marker representing the device's current location
         if (mMap == null)
             return;
-
         try {
             if (locationPermissionGranted) {
                 mMap.setMyLocationEnabled(true);
@@ -178,6 +180,7 @@ public class FinderFragment extends Fragment implements OnMapReadyCallback {
                         if (task.isSuccessful()) {
                             lastKnownLocation = task.getResult();
                             if (lastKnownLocation != null) {
+                                // Move the camera to the device location
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                         new LatLng(lastKnownLocation.getLatitude(),
                                                 lastKnownLocation.getLongitude()), DEFAULT_ZOOM));

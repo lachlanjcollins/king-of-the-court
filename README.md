@@ -3,6 +3,7 @@ Android native application for pickup basketball. King of the court is a mobile 
 ## Features
 - Firebase Auth Login
 - Sign-in with Google
+- Cloud Firestore Database
 - Google Maps API
 
 ## App Screenshots
